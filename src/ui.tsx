@@ -207,14 +207,14 @@ function Plugin() {
           <div className="custom-row-toggle">
             <CustomToggle checked={autoFontWeight} onChange={setAutoFontWeight} />
           </div>
-          <CustomInfoIcon tooltip="When enabled, text with font weight less than 500 (semibold) will be automatically made bold for optimal shimmer visibility." />
+          <CustomInfoIcon tooltip="If the selected text layer has a font weight not ideal for the effect, it will be updated to bold for the best shimmer visibility." />
         </div>
         <div className="custom-row">
           <div className="custom-row-label">Replace text</div>
           <div className="custom-row-toggle">
             <CustomToggle checked={replaceText} onChange={setReplaceText} />
           </div>
-          <CustomInfoIcon tooltip="When enabled, the selected text will be replaced with an animated shimmer component. When disabled, the original text remains and the component is created on the 'Shimmer component' page." />
+          <CustomInfoIcon tooltip="If checked, the selected text will be replaced with an animated shimmer component. If unchecked, the original text remains and the component is created on the 'Shimmer component' page." />
         </div>
       </div>
     )

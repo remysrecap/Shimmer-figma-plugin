@@ -59,8 +59,8 @@ const customRowStyles = `
     cursor: pointer;
     border-radius: 2px;
     position: relative;
-    margin-left: 8px;
-    padding: 8px 0;
+    margin-left: 4px;
+    padding: 8px 8px;
   }
 
   .custom-row-icon:hover {

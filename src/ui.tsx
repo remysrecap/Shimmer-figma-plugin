@@ -7,81 +7,16 @@ import {
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
-import { useCallback, useState, useEffect } from 'preact/hooks'
+import { useCallback, useState, useEffect, useRef } from 'preact/hooks'
 
 import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Add tooltip styles
 const tooltipStyles = `
-  .toggle-row {
+  .row-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px solid #E5E5E5;
-  }
-
-  .toggle-row:last-child {
-    border-bottom: none;
-  }
-
-  .toggle-label {
-    font-size: 11px;
-    font-weight: 400;
-    color: #000000;
-    flex: 1;
-  }
-
-  .toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .toggle-switch {
-    position: relative;
-    width: 28px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-
-  .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
-  }
-
-  .toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #E5E5E5;
-    transition: .2s;
-    border-radius: 34px;
-  }
-
-  .toggle-slider:before {
-    position: absolute;
-    content: "";
-    height: 12px;
-    width: 12px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: .2s;
-    border-radius: 50%;
-  }
-
-  .toggle-switch input:checked + .toggle-slider {
-    background-color: #18A0FB;
-  }
-
-  .toggle-switch input:checked + .toggle-slider:before {
-    transform: translateX(12px);
   }
 
   .info-button {
@@ -94,6 +29,8 @@ const tooltipStyles = `
     position: relative;
     cursor: help;
     flex-shrink: 0;
+    margin-left: 6px;
+    margin-top: 1px;
   }
 
   .info-button:hover {
@@ -106,7 +43,7 @@ const tooltipStyles = `
   }
 
   .tooltip {
-    position: fixed;
+    position: fixed; /* Keep fixed for viewport relative positioning */
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 8px 12px;
@@ -120,21 +57,17 @@ const tooltipStyles = `
     transition: opacity 0.2s;
     white-space: normal;
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
-  .info-button:hover .tooltip {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .tooltip::before {
+  .tooltip::after {
     content: '';
     position: absolute;
-    bottom: 100%;
-    left: 12px;
-    border: 5px solid transparent;
-    border-bottom-color: rgba(0, 0, 0, 0.9);
+    bottom: 100%; /* Arrow points up from the bottom of the tooltip */
+    right: 16px; /* Position arrow from the right edge of the tooltip */
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
   }
 `
 
@@ -152,40 +85,46 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (checked: b
   )
 }
 
-// Info icon component
-function InfoIcon({ tooltip }: { tooltip: string }) {
-  const [tooltipStyle, setTooltipStyle] = useState<any>({})
-  const iconRef = useCallback((node: HTMLElement | null) => {
-    if (node) {
-      const rect = node.getBoundingClientRect()
-      setTooltipStyle({
-        top: `${rect.bottom + 8}px`,
-        left: `${rect.left - 12}px`
-      })
-    }
-  }, [])
-
-  return (
-    <span className="info-button" ref={iconRef}>
-      <svg viewBox="0 0 12 12" fill="none">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M6 12A6 6 0 106 0a6 6 0 000 12zM5.333 5.333v4h1.334v-4H5.333zm0-2.666V4h1.334V2.667H5.333z"
-          fill="currentColor"
-        />
-      </svg>
-      <div className="tooltip" style={tooltipStyle}>{tooltip}</div>
-    </span>
-  )
-}
-
 function Plugin() {
   const [autoFontWeight, setAutoFontWeight] = useState<boolean>(true)
   const [replaceText, setReplaceText] = useState<boolean>(true)
   const [hasValidSelection, setHasValidSelection] = useState<boolean>(false)
   const [selectionCount, setSelectionCount] = useState<number>(0)
-  
+  const containerRef = useRef<HTMLDivElement>(null) // Ref for the main container
+
+  // Info icon component
+  function InfoIcon({ tooltip }: { tooltip: string }) {
+    const [tooltipStyle, setTooltipStyle] = useState<any>({})
+    const iconRef = useCallback((node: HTMLElement | null) => {
+      if (node && containerRef.current) { // Ensure both refs are available
+        const iconRect = node.getBoundingClientRect()
+        const containerRect = containerRef.current.getBoundingClientRect()
+        const tooltipWidth = 220 // Defined in CSS
+        const containerPadding = 16 // space="medium"
+
+        setTooltipStyle({
+          top: `${iconRect.bottom + 8}px`, // Below the icon
+          left: `${containerRect.right - tooltipWidth - containerPadding}px`, // Right-aligned to container's content area
+          maxWidth: `${containerRect.width - (containerPadding * 2)}px` // Max width within container
+        })
+      }
+    }, [containerRef.current]) // Add containerRef.current to dependencies
+
+    return (
+      <span className="info-button" ref={iconRef}>
+        <svg viewBox="0 0 12 12" fill="none">
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M6 12A6 6 0 106 0a6 6 0 000 12zM5.333 5.333v4h1.334v-4H5.333zm0-2.666V4h1.334V2.667H5.333z"
+            fill="currentColor"
+          />
+        </svg>
+        <div className="tooltip" style={tooltipStyle}>{tooltip}</div>
+      </span>
+    )
+  }
+
   // Listen for selection changes from main thread
   useEffect(() => {
     on<SelectionChangeHandler>('SELECTION_CHANGE', ({ hasValidSelection, selectionCount }) => {
@@ -193,7 +132,7 @@ function Plugin() {
       setSelectionCount(selectionCount)
     })
   }, [])
-  
+
   const handleCreateShimmerButtonClick = useCallback(
     function () {
       if (hasValidSelection) {
@@ -204,37 +143,38 @@ function Plugin() {
   )
   
   return (
-    <Container space="medium">
+    <Container space="medium" ref={containerRef}>
       <style>{tooltipStyles}</style>
       <VerticalSpace space="large" />
       <Text>
         <strong>Shimmer Effect</strong>
       </Text>
       <VerticalSpace space="medium" />
-      
-      <div className="toggle-row">
-        <div className="toggle-label">Automatic font-weight</div>
-        <div className="toggle-container">
-          <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
-          <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
-        </div>
+      {/* Separator after title */}
+      <div style={{ borderBottom: '1px solid var(--figma-color-border)', margin: '0 -16px' }}></div>
+      <VerticalSpace space="small" />
+
+      <div className="row-item">
+        <Text style={{ flex: 1 }}>Automatic font-weight</Text>
+        <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+        <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
       </div>
-      
-      <div className="toggle-row">
-        <div className="toggle-label">Replace text</div>
-        <div className="toggle-container">
-          <Toggle checked={replaceText} onChange={setReplaceText} />
-          <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
-        </div>
+      <div className="row-item">
+        <Text style={{ flex: 1 }}>Replace text</Text>
+        <Toggle checked={replaceText} onChange={setReplaceText} />
+        <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
       </div>
-      
       <VerticalSpace space="extraLarge" />
-      <Button 
-        fullWidth 
+      {/* Separator before button */}
+      <div style={{ borderBottom: '1px solid var(--figma-color-border)', margin: '0 -16px' }}></div>
+      <VerticalSpace space="small" />
+
+      <Button
+        fullWidth
         onClick={handleCreateShimmerButtonClick}
         disabled={!hasValidSelection}
       >
-        {hasValidSelection 
+        {hasValidSelection
           ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
           : 'Select text layer'
         }

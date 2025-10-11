@@ -3,7 +3,9 @@ import {
   Container,
   render,
   Text,
-  VerticalSpace
+  VerticalSpace,
+  Tabs,
+  TabsOption
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
@@ -83,7 +85,8 @@ const tooltipStyles = `
   .toggle-container {
     display: flex;
     align-items: center;
-    padding: 8px 16px 8px 8px;
+    justify-content: flex-end;
+    padding: 8px 32px 8px 8px;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -93,7 +96,7 @@ const tooltipStyles = `
     align-items: center;
     justify-content: center;
     padding: 8px 12px;
-    color: #8D8D8D;
+    color: #666666;
     position: relative;
     z-index: unset;
   }
@@ -129,6 +132,26 @@ const tooltipStyles = `
     opacity: 1;
     pointer-events: auto;
   }
+
+  .tab-content {
+    min-height: 200px;
+    padding: 16px 0;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--figma-color-border);
+    padding: 16px;
+    z-index: 1000;
+  }
+
+  .main-content {
+    padding-bottom: 80px; /* Space for fixed footer */
+  }
 `
 
 // Toggle component
@@ -150,6 +173,7 @@ function Plugin() {
   const [replaceText, setReplaceText] = useState<boolean>(true)
   const [hasValidSelection, setHasValidSelection] = useState<boolean>(false)
   const [selectionCount, setSelectionCount] = useState<number>(0)
+  const [activeTab, setActiveTab] = useState<string>('Settings')
 
   // Info icon component
   function InfoIcon({ tooltip }: { tooltip: string }) {
@@ -185,50 +209,116 @@ function Plugin() {
     [autoFontWeight, replaceText, hasValidSelection]
   )
 
+  // Tab content components
+  function SettingsContent() {
+    return (
+      <div className="tab-content">
+        <div className="row-item">
+          <div className="text-container">
+            <Text>Automatic font-weight</Text>
+          </div>
+          <div className="toggle-container">
+            <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+          </div>
+          <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
+        </div>
+        <div className="row-item">
+          <div className="text-container">
+            <Text>Replace text</Text>
+          </div>
+          <div className="toggle-container">
+            <Toggle checked={replaceText} onChange={setReplaceText} />
+          </div>
+          <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
+        </div>
+      </div>
+    )
+  }
+
+  function AboutContent() {
+    return (
+      <div className="tab-content">
+        <Text>
+          <strong>Shimmer Effect Plugin</strong>
+        </Text>
+        <VerticalSpace space="medium" />
+        <Text>
+          Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
+        </Text>
+        <VerticalSpace space="medium" />
+        <Text>
+          <strong>Features:</strong>
+        </Text>
+        <VerticalSpace space="small" />
+        <Text>• Automatic font-weight optimization</Text>
+        <Text>• Hollow text with gradient animation</Text>
+        <Text>• Component set creation with prototyping</Text>
+        <Text>• Dedicated component page organization</Text>
+        <Text>• Text replacement options</Text>
+        <VerticalSpace space="medium" />
+        <Text>
+          <strong>Version:</strong> 1.0.0
+        </Text>
+        <Text>
+          <strong>Author:</strong> Shimmer Plugin Team
+        </Text>
+      </div>
+    )
+  }
+
+  function DonateContent() {
+    return (
+      <div className="tab-content">
+        <Text>
+          <strong>Donate</strong>
+        </Text>
+        <VerticalSpace space="medium" />
+        <Text>Coming soon! We're working on adding donation options to support the development of this plugin.</Text>
+        <VerticalSpace space="medium" />
+        <Text>Thank you for using Shimmer Effect! 🙏</Text>
+      </div>
+    )
+  }
+
+  const tabs: TabsOption[] = [
+    { value: 'Settings', children: 'Settings' },
+    { value: 'About', children: 'About' },
+    { value: 'Donate', children: 'Donate' }
+  ]
+
   return (
-    <Container space="medium">
-      <style>{tooltipStyles}</style>
-      <VerticalSpace space="large" />
-      <Text>
-        <strong>Shimmer Effect</strong>
-      </Text>
-      <VerticalSpace space="medium" />
-
-      <div className="row-item">
-        <div className="text-container">
-          <Text>Automatic font-weight</Text>
-        </div>
-        <div className="toggle-container">
-          <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
-        </div>
-        <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
+    <div className="main-content">
+      <Container space="medium">
+        <style>{tooltipStyles}</style>
+        <VerticalSpace space="large" />
+        
+        <Tabs
+          options={tabs}
+          value={activeTab}
+          onValueChange={setActiveTab}
+        />
+        
+        <VerticalSpace space="medium" />
+        
+        {activeTab === 'Settings' && <SettingsContent />}
+        {activeTab === 'About' && <AboutContent />}
+        {activeTab === 'Donate' && <DonateContent />}
+        
+      </Container>
+      
+      <div className="footer">
+        <Button
+          fullWidth
+          onClick={handleCreateShimmerButtonClick}
+          disabled={!hasValidSelection}
+        >
+          {hasValidSelection
+            ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
+            : 'Select text layer'
+          }
+        </Button>
       </div>
-      <div className="row-item">
-        <div className="text-container">
-          <Text>Replace text</Text>
-        </div>
-        <div className="toggle-container">
-          <Toggle checked={replaceText} onChange={setReplaceText} />
-        </div>
-        <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
-      </div>
-      <VerticalSpace space="extraLarge" />
-      <VerticalSpace space="extraLarge" />
-      <VerticalSpace space="extraLarge" />
-
-      <Button
-        fullWidth
-        onClick={handleCreateShimmerButtonClick}
-        disabled={!hasValidSelection}
-      >
-        {hasValidSelection
-          ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
-          : 'Select text layer'
-        }
-      </Button>
-      <VerticalSpace space="large" />
-      <VerticalSpace space="large" />
-    </Container>
+    </div>
   )
 }
 

@@ -3,7 +3,9 @@ import {
   Container,
   render,
   Text,
-  VerticalSpace
+  VerticalSpace,
+  Tabs,
+  TabsOption
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
@@ -38,7 +40,7 @@ const tooltipStyles = `
     display: flex;
     flex: 1;
     align-items: center;
-    padding: 0 12px;
+    padding: 0 12px 0 12px;
   }
 
   .text-label {
@@ -58,8 +60,11 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 12px 0 13px; /* 1px gap from text-action container */
+    padding: 0 12px;
+    margin-left: 1px; /* 1px gap from text-action container */
     flex-shrink: 0;
+    width: 44px; /* Fixed width for consistent sizing */
+    height: 100%; /* Match parent height */
   }
 
   .toggle-switch {
@@ -109,8 +114,8 @@ const tooltipStyles = `
   }
 
   .info-button {
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -184,31 +189,6 @@ const tooltipStyles = `
     margin: 0 -16px;
     padding: 0 16px;
     margin-top: -16px; /* Move tabs to y=0 */
-  }
-
-  .custom-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--figma-color-border);
-    margin-bottom: 0;
-  }
-
-  .custom-tab {
-    padding: 8px 16px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    color: var(--figma-color-text-secondary);
-    font-size: 11px;
-    font-weight: 400;
-  }
-
-  .custom-tab.active {
-    color: var(--figma-color-text);
-    font-weight: 500;
-    border-bottom-color: var(--figma-color-text);
-  }
-
-  .custom-tab:hover {
-    color: var(--figma-color-text);
   }
 `
 
@@ -338,6 +318,12 @@ function Plugin() {
     )
   }
 
+  const tabs: TabsOption[] = [
+    { value: 'Settings', children: 'Settings' },
+    { value: 'About', children: 'About' },
+    { value: 'Donate', children: 'Donate' }
+  ]
+
   return (
     <div className="main-content">
       <Container space="medium" className="plugin-container">
@@ -345,26 +331,11 @@ function Plugin() {
         <VerticalSpace space="large" />
         
         <div className="tabs-container">
-          <div className="custom-tabs">
-            <div 
-              className={`custom-tab ${activeTab === 'Settings' ? 'active' : ''}`}
-              onClick={() => setActiveTab('Settings')}
-            >
-              Settings
-            </div>
-            <div 
-              className={`custom-tab ${activeTab === 'About' ? 'active' : ''}`}
-              onClick={() => setActiveTab('About')}
-            >
-              About
-            </div>
-            <div 
-              className={`custom-tab ${activeTab === 'Donate' ? 'active' : ''}`}
-              onClick={() => setActiveTab('Donate')}
-            >
-              Donate
-            </div>
-          </div>
+          <Tabs
+            options={tabs}
+            value={activeTab}
+            onValueChange={setActiveTab}
+          />
         </div>
         
         <VerticalSpace space="medium" />

@@ -15,22 +15,6 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Custom row styles following create-figma-plugin patterns
 const customRowStyles = `
-  /* Hide titles in tab content */
-  .children h1,
-  .children h2,
-  .children h3,
-  .children h4,
-  .children h5,
-  .children h6,
-  [class*="children"] h1,
-  [class*="children"] h2,
-  [class*="children"] h3,
-  [class*="children"] h4,
-  [class*="children"] h5,
-  [class*="children"] h6 {
-    display: none !important;
-  }
-  
   .custom-row {
     display: flex;
     align-items: center;
@@ -273,9 +257,9 @@ function Plugin() {
   }
 
   const tabs: TabsOption[] = [
-    { value: 'Settings', children: 'Settings' },
-    { value: 'About', children: 'About' },
-    { value: 'Donate', children: 'Donate' }
+    { value: 'Settings', children: null },
+    { value: 'About', children: null },
+    { value: 'Donate', children: null }
   ]
 
   return (

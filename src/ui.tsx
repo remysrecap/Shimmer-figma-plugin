@@ -50,8 +50,8 @@ const customRowStyles = `
   }
 
   .custom-row-icon {
-    width: 12px;
-    height: 12px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,7 +60,6 @@ const customRowStyles = `
     border-radius: 2px;
     position: relative;
     margin-left: 4px;
-    padding: 8px 8px;
   }
 
   .custom-row-icon:hover {

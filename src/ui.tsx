@@ -113,11 +113,19 @@ const customRowStyles = `
     transform: translateX(12px);
   }
 
-  .custom-icon svg {
-    width: 4px !important;
-    height: 4px !important;
-    fill: currentColor;
-    flex-shrink: 0;
+  .custom-info-icon {
+    width: 4px;
+    height: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3px;
+    font-weight: bold;
+    color: currentColor;
+    background-color: currentColor;
+    border-radius: 50%;
+    color: white;
+    line-height: 1;
   }
 
   .custom-tooltip {
@@ -169,14 +177,7 @@ function Plugin() {
   function CustomInfoIcon({ tooltip }: { tooltip: string }) {
     return (
       <span className="custom-row-icon">
-        <svg viewBox="0 0 12 12" fill="none" className="custom-icon">
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M6 12A6 6 0 106 0a6 6 0 000 12zM5.333 5.333v4h1.334v-4H5.333zm0-2.666V4h1.334V2.667H5.333z"
-            fill="currentColor"
-          />
-        </svg>
+        <div className="custom-info-icon">i</div>
         <div className="custom-tooltip">{tooltip}</div>
       </span>
     )

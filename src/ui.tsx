@@ -50,8 +50,8 @@ const customRowStyles = `
   }
 
   .custom-row-icon {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -114,8 +114,8 @@ const customRowStyles = `
   }
 
   .custom-icon svg {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     fill: currentColor;
   }
 

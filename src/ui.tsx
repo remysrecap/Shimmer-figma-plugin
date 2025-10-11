@@ -50,8 +50,8 @@ const customRowStyles = `
   }
 
   .custom-row-icon {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +63,6 @@ const customRowStyles = `
   }
 
   .custom-row-icon:hover {
-    background: rgba(0, 0, 0, 0.06);
     color: #8d8d8d;
   }
 
@@ -114,8 +113,8 @@ const customRowStyles = `
   }
 
   .custom-icon svg {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
     fill: currentColor;
   }
 

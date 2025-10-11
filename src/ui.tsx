@@ -17,8 +17,8 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 const tooltipStyles = `
   .row-item {
     display: flex;
-    align-items: stretch;
-    padding: 0;
+    align-items: center;
+    padding: 12px 16px;
     margin-bottom: 8px;
     border-radius: 6px;
     background: #F5F5F5;
@@ -29,42 +29,30 @@ const tooltipStyles = `
     background: #EBEBEB;
   }
 
-  .row-content {
-    display: flex;
+  .row-label {
     flex: 1;
-    align-items: center;
-    padding: 12px 0;
-  }
-
-  .text-action-container {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    padding: 0 12px 0 12px;
-  }
-
-  .text-label {
     font-weight: 400;
-    display: flex;
-    align-items: center;
-    margin-right: 12px;
+    color: #000000;
   }
 
-  .toggle-container {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
+  .row-toggle {
+    margin-right: 16px;
   }
 
-  .icon-container {
+  .row-icon {
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 12px;
-    margin-left: 1px; /* 1px gap from text-action container */
-    flex-shrink: 0;
-    width: 44px; /* Fixed width for consistent sizing */
-    height: 100%; /* Match parent height */
+    color: #8D8D8D;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .row-icon:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #333333;
   }
 
   .toggle-switch {
@@ -113,27 +101,9 @@ const tooltipStyles = `
     transform: translateX(12px);
   }
 
-  .info-button {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666666;
-    position: relative;
-    z-index: 1000;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-
-  .info-button:hover {
-    background: rgba(0, 0, 0, 0.06);
-    color: #333333;
-  }
-
-  .info-button svg {
-    width: 8px;
-    height: 8px;
+  .info-icon svg {
+    width: 10px;
+    height: 10px;
     fill: currentColor;
   }
 
@@ -216,7 +186,7 @@ function Plugin() {
   // Info icon component
   function InfoIcon({ tooltip }: { tooltip: string }) {
     return (
-      <span className="info-button">
+      <span className="info-icon" style={{ position: 'relative' }}>
         <svg viewBox="0 0 12 12" fill="none">
           <path
             fillRule="evenodd"
@@ -252,29 +222,21 @@ function Plugin() {
     return (
       <div className="tab-content">
         <div className="row-item">
-          <div className="row-content">
-            <div className="text-action-container">
-              <div className="text-label">Automatic font-weight</div>
-              <div className="toggle-container">
-                <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
-              </div>
-            </div>
-            <div className="icon-container">
-              <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
-            </div>
+          <div className="row-label">Automatic font-weight</div>
+          <div className="row-toggle">
+            <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+          </div>
+          <div className="row-icon">
+            <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
           </div>
         </div>
         <div className="row-item">
-          <div className="row-content">
-            <div className="text-action-container">
-              <div className="text-label">Replace text</div>
-              <div className="toggle-container">
-                <Toggle checked={replaceText} onChange={setReplaceText} />
-              </div>
-            </div>
-            <div className="icon-container">
-              <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
-            </div>
+          <div className="row-label">Replace text</div>
+          <div className="row-toggle">
+            <Toggle checked={replaceText} onChange={setReplaceText} />
+          </div>
+          <div className="row-icon">
+            <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
           </div>
         </div>
       </div>

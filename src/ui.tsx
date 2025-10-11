@@ -75,19 +75,29 @@ const tooltipStyles = `
     transform: translateX(12px);
   }
 
-  .text-container {
-    flex: 1;
+  .label {
+    font-weight: 400;
     display: flex;
     align-items: center;
-    padding: 8px 0 8px 8px;
+    width: 140px;
+    margin-right: 4px;
   }
 
-  .toggle-container {
+  .input-container {
+    flex: 1;
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding: 8px 40px 8px 8px;
+    margin: -8px 8px -8px 0;
+    padding: 8px 48px 8px 0;
     border-right: 1.5px solid #FFFFFF;
+  }
+
+  .right-aligned-content {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
   }
 
   .info-button {
@@ -95,8 +105,9 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 12px;
-    color: #000000;
+    margin: -8px -8px -8px -8px;
+    padding: 0 4px;
+    color: #8D8D8D;
     position: relative;
     z-index: unset;
   }
@@ -224,20 +235,20 @@ function Plugin() {
     return (
       <div className="tab-content">
         <div className="row-item">
-          <div className="text-container">
-            <Text>Automatic font-weight</Text>
-          </div>
-          <div className="toggle-container">
-            <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+          <div className="label">Automatic font-weight</div>
+          <div className="input-container">
+            <div className="right-aligned-content">
+              <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+            </div>
           </div>
           <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
         </div>
         <div className="row-item">
-          <div className="text-container">
-            <Text>Replace text</Text>
-          </div>
-          <div className="toggle-container">
-            <Toggle checked={replaceText} onChange={setReplaceText} />
+          <div className="label">Replace text</div>
+          <div className="input-container">
+            <div className="right-aligned-content">
+              <Toggle checked={replaceText} onChange={setReplaceText} />
+            </div>
           </div>
           <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
         </div>

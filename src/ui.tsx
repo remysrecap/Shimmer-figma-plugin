@@ -18,7 +18,7 @@ const tooltipStyles = `
   .row-item {
     display: flex;
     align-items: stretch;
-    padding: 8px 16px;
+    padding: 8px 20px 8px 16px;
     margin-bottom: 8px;
     border-radius: 6px;
     background: #F5F5F5;
@@ -88,8 +88,8 @@ const tooltipStyles = `
     position: relative;
     display: flex;
     align-items: center;
-    margin: -8px 8px -8px 0;
-    padding: 8px 32px 8px 0;
+    margin: -8px 0 -8px 0;
+    padding: 8px 16px 8px 0;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -102,15 +102,17 @@ const tooltipStyles = `
 
   .info-button {
     width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: -8px -8px -8px -8px;
-    padding: 0 12px;
+    padding: 0 8px;
     color: #666666;
     position: relative;
     z-index: 1000;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .info-button:hover {

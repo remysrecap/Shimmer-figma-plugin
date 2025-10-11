@@ -41,7 +41,7 @@ export default function () {
 
         showUI({
           height: 380,
-          width: 280
+          width: 322
         })
 
   // Wait for UI to be ready, then check initial selection

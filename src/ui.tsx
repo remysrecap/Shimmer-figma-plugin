@@ -113,9 +113,10 @@ const customRowStyles = `
   }
 
   .custom-icon svg {
-    width: 4px;
-    height: 4px;
+    width: 4px !important;
+    height: 4px !important;
     fill: currentColor;
+    flex-shrink: 0;
   }
 
   .custom-tooltip {

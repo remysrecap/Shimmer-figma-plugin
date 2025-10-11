@@ -86,7 +86,7 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 8px 32px 8px 8px;
+    padding: 8px 64px 8px 8px;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -96,7 +96,7 @@ const tooltipStyles = `
     align-items: center;
     justify-content: center;
     padding: 8px 12px;
-    color: #666666;
+    color: #333333;
     position: relative;
     z-index: unset;
   }
@@ -135,7 +135,7 @@ const tooltipStyles = `
 
   .tab-content {
     min-height: 200px;
-    padding: 16px 0;
+    padding: 0;
   }
 
   .footer {
@@ -151,6 +151,16 @@ const tooltipStyles = `
 
   .main-content {
     padding-bottom: 80px; /* Space for fixed footer */
+  }
+
+  /* Remove default container padding and make tabs flush */
+  .plugin-container {
+    padding: 0 !important;
+  }
+
+  .tabs-container {
+    margin: 0 -16px;
+    padding: 0 16px;
   }
 `
 
@@ -239,10 +249,6 @@ function Plugin() {
     return (
       <div className="tab-content">
         <Text>
-          <strong>Shimmer Effect Plugin</strong>
-        </Text>
-        <VerticalSpace space="medium" />
-        <Text>
           Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
         </Text>
         <VerticalSpace space="medium" />
@@ -269,10 +275,6 @@ function Plugin() {
   function DonateContent() {
     return (
       <div className="tab-content">
-        <Text>
-          <strong>Donate</strong>
-        </Text>
-        <VerticalSpace space="medium" />
         <Text>Coming soon! We're working on adding donation options to support the development of this plugin.</Text>
         <VerticalSpace space="medium" />
         <Text>Thank you for using Shimmer Effect! 🙏</Text>
@@ -288,15 +290,17 @@ function Plugin() {
 
   return (
     <div className="main-content">
-      <Container space="medium">
+      <Container space="medium" className="plugin-container">
         <style>{tooltipStyles}</style>
         <VerticalSpace space="large" />
         
-        <Tabs
-          options={tabs}
-          value={activeTab}
-          onValueChange={setActiveTab}
-        />
+        <div className="tabs-container">
+          <Tabs
+            options={tabs}
+            value={activeTab}
+            onValueChange={setActiveTab}
+          />
+        </div>
         
         <VerticalSpace space="medium" />
         

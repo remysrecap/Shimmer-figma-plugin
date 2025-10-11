@@ -19,7 +19,7 @@ const customRowStyles = `
     display: flex;
     align-items: center;
     padding: 0 12px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     border-radius: 6px;
     background: var(--figma-color-bg-secondary, #f5f5f5);
     transition: background-color 0.1s ease;
@@ -50,8 +50,8 @@ const customRowStyles = `
   }
 
   .custom-row-icon {
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,14 +206,14 @@ function Plugin() {
           <div className="custom-row-toggle">
             <CustomToggle checked={autoFontWeight} onChange={setAutoFontWeight} />
           </div>
-          <CustomInfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
+          <CustomInfoIcon tooltip="When enabled, text with font weight less than 500 (semibold) will be automatically made bold for optimal shimmer visibility." />
         </div>
         <div className="custom-row">
           <div className="custom-row-label">Replace text</div>
           <div className="custom-row-toggle">
             <CustomToggle checked={replaceText} onChange={setReplaceText} />
           </div>
-          <CustomInfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
+          <CustomInfoIcon tooltip="When enabled, the selected text will be replaced with an animated shimmer component. When disabled, the original text remains and the component is created on the 'Shimmer component' page." />
         </div>
       </div>
     )

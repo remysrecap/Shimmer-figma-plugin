@@ -67,6 +67,10 @@ const customRowStyles = `
     color: #666666;
   }
 
+  .custom-row-icon:hover .custom-info-icon {
+    background-color: #666666;
+  }
+
   .custom-toggle-switch {
     position: relative;
     width: 28px;
@@ -121,8 +125,7 @@ const customRowStyles = `
     justify-content: center;
     font-size: 3px;
     font-weight: bold;
-    color: currentColor;
-    background-color: currentColor;
+    background-color: #8d8d8d;
     border-radius: 50%;
     color: white;
     line-height: 1;

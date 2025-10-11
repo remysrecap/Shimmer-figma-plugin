@@ -1,8 +1,6 @@
 import {
   Button,
-  Checkbox,
   Container,
-  Inline,
   render,
   Text,
   VerticalSpace
@@ -15,9 +13,75 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Add tooltip styles
 const tooltipStyles = `
-  .checkbox-with-tooltip {
+  .toggle-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .toggle-row:last-child {
+    border-bottom: none;
+  }
+
+  .toggle-label {
+    font-size: 11px;
+    font-weight: 400;
+    color: #000000;
+    flex: 1;
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 28px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E5E5E5;
+    transition: .2s;
+    border-radius: 34px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+  }
+
+  .toggle-switch input:checked + .toggle-slider {
+    background-color: #18A0FB;
+  }
+
+  .toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(12px);
   }
 
   .info-button {
@@ -30,8 +94,6 @@ const tooltipStyles = `
     position: relative;
     cursor: help;
     flex-shrink: 0;
-    margin-left: 6px;
-    margin-top: 1px;
   }
 
   .info-button:hover {
@@ -75,6 +137,20 @@ const tooltipStyles = `
     border-bottom-color: rgba(0, 0, 0, 0.9);
   }
 `
+
+// Toggle component
+function Toggle({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
+  return (
+    <label className="toggle-switch">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange((e.target as HTMLInputElement).checked)}
+      />
+      <span className="toggle-slider"></span>
+    </label>
+  )
+}
 
 // Info icon component
 function InfoIcon({ tooltip }: { tooltip: string }) {
@@ -135,25 +211,23 @@ function Plugin() {
         <strong>Shimmer Effect</strong>
       </Text>
       <VerticalSpace space="medium" />
-      <div className="checkbox-with-tooltip">
-        <Checkbox
-          onValueChange={setAutoFontWeight}
-          value={autoFontWeight}
-        >
-          <Text>Automatic font-weight</Text>
-        </Checkbox>
-        <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
+      
+      <div className="toggle-row">
+        <div className="toggle-label">Automatic font-weight</div>
+        <div className="toggle-container">
+          <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+          <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
+        </div>
       </div>
-      <VerticalSpace space="small" />
-      <div className="checkbox-with-tooltip">
-        <Checkbox
-          onValueChange={setReplaceText}
-          value={replaceText}
-        >
-          <Text>Replace text</Text>
-        </Checkbox>
-        <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
+      
+      <div className="toggle-row">
+        <div className="toggle-label">Replace text</div>
+        <div className="toggle-container">
+          <Toggle checked={replaceText} onChange={setReplaceText} />
+          <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
+        </div>
       </div>
+      
       <VerticalSpace space="extraLarge" />
       <Button 
         fullWidth 

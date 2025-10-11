@@ -263,7 +263,7 @@ function Plugin() {
   ]
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <style>{customRowStyles}</style>
       
       <Tabs
@@ -272,22 +272,26 @@ function Plugin() {
         onValueChange={setActiveTab}
       />
       
-      {activeTab === 'Settings' && <SettingsContent />}
-      {activeTab === 'About' && <AboutContent />}
-      {activeTab === 'Donate' && <DonateContent />}
-      
-      <div style={{ padding: '16px' }}>
-        <Button
-          fullWidth
-          onClick={handleCreateShimmerButtonClick}
-          disabled={!hasValidSelection}
-        >
-          {hasValidSelection
-            ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
-            : 'Select text layer'
-          }
-        </Button>
+      <div style={{ flex: 1 }}>
+        {activeTab === 'Settings' && <SettingsContent />}
+        {activeTab === 'About' && <AboutContent />}
+        {activeTab === 'Donate' && <DonateContent />}
       </div>
+      
+      {activeTab === 'Settings' && (
+        <div style={{ padding: '16px', borderTop: '1px solid var(--figma-color-border, #e5e5e5)' }}>
+          <Button
+            fullWidth
+            onClick={handleCreateShimmerButtonClick}
+            disabled={!hasValidSelection}
+          >
+            {hasValidSelection
+              ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
+              : 'Select text layer'
+            }
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

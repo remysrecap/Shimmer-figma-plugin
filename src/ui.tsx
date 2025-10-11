@@ -7,7 +7,7 @@ import {
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
-import { useCallback, useState, useEffect, useRef } from 'preact/hooks'
+import { useCallback, useState, useEffect } from 'preact/hooks'
 
 import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
@@ -73,22 +73,30 @@ const tooltipStyles = `
     transform: translateX(12px);
   }
 
+  .toggle-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin: -8px 8px -8px 0;
+    padding: 8px 48px 8px 0;
+    border-right: 1.5px solid #FFFFFF;
+  }
+
   .info-button {
-    width: 12px;
-    height: 12px;
-    display: inline-flex;
+    width: 24px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    color: #B3B3B3;
+    margin: -8px -8px -8px -8px;
+    padding: 0 4px;
+    color: #8D8D8D;
     position: relative;
-    cursor: help;
-    flex-shrink: 0;
-    margin-left: 8px;
-    margin-top: 1px;
+    z-index: unset;
   }
 
   .info-button:hover {
-    color: #8D8D8D;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 0 6px 6px 0;
   }
 
   .info-button svg {
@@ -97,31 +105,25 @@ const tooltipStyles = `
   }
 
   .tooltip {
-    position: fixed; /* Keep fixed for viewport relative positioning */
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
     background: rgba(0, 0, 0, 0.9);
     color: white;
     padding: 8px 12px;
     border-radius: 4px;
     font-size: 11px;
     line-height: 16px;
-    width: 220px;
+    width: 200px;
     z-index: 10000;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
-    white-space: normal;
-    text-align: left;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
-  .tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: 100%; /* Arrow points up from the bottom of the tooltip */
-    right: 16px; /* Position arrow from the right edge of the tooltip */
-    border-width: 6px;
-    border-style: solid;
-    border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+  .info-button:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
   }
 `
 
@@ -144,37 +146,20 @@ function Plugin() {
   const [replaceText, setReplaceText] = useState<boolean>(true)
   const [hasValidSelection, setHasValidSelection] = useState<boolean>(false)
   const [selectionCount, setSelectionCount] = useState<number>(0)
-  const containerRef = useRef<HTMLDivElement>(null) // Ref for the main container
 
   // Info icon component
   function InfoIcon({ tooltip }: { tooltip: string }) {
-    const [tooltipStyle, setTooltipStyle] = useState<any>({})
-    const iconRef = useCallback((node: HTMLElement | null) => {
-      if (node && containerRef.current) { // Ensure both refs are available
-        const iconRect = node.getBoundingClientRect()
-        const containerRect = containerRef.current.getBoundingClientRect()
-        const tooltipWidth = 220 // Defined in CSS
-        const containerPadding = 16 // space="medium"
-
-        setTooltipStyle({
-          top: `${iconRect.bottom + 8}px`, // Below the icon
-          left: `${containerRect.right - tooltipWidth - containerPadding}px`, // Right-aligned to container's content area
-          maxWidth: `${containerRect.width - (containerPadding * 2)}px` // Max width within container
-        })
-      }
-    }, [containerRef.current]) // Add containerRef.current to dependencies
-
     return (
-      <span className="info-button" ref={iconRef}>
+      <span className="info-button">
         <svg viewBox="0 0 12 12" fill="none">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M6 12A6 6 0 106 0a6 6 0 000 12zM5.333 5.333v4h1.334v-4H5.333zm0-2.666V4h1.334V2.667H5.333z"
             fill="currentColor"
           />
         </svg>
-        <div className="tooltip" style={tooltipStyle}>{tooltip}</div>
+        <div className="tooltip">{tooltip}</div>
       </span>
     )
   }
@@ -195,9 +180,9 @@ function Plugin() {
     },
     [autoFontWeight, replaceText, hasValidSelection]
   )
-  
+
   return (
-    <Container space="medium" ref={containerRef}>
+    <Container space="medium">
       <style>{tooltipStyles}</style>
       <VerticalSpace space="large" />
       <Text>
@@ -207,12 +192,16 @@ function Plugin() {
 
       <div className="row-item">
         <Text style={{ flex: 1 }}>Automatic font-weight</Text>
-        <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+        <div className="toggle-container">
+          <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+        </div>
         <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
       </div>
       <div className="row-item">
         <Text style={{ flex: 1 }}>Replace text</Text>
-        <Toggle checked={replaceText} onChange={setReplaceText} />
+        <div className="toggle-container">
+          <Toggle checked={replaceText} onChange={setReplaceText} />
+        </div>
         <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
       </div>
       <VerticalSpace space="extraLarge" />

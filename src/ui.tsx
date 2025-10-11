@@ -95,19 +95,19 @@ const tooltipStyles = `
 
   .right-aligned-content {
     position: absolute;
-    right: 8px;
+    right: 12px;
     display: flex;
     align-items: center;
   }
 
   .info-button {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: -8px -8px -8px -8px;
-    padding: 0 8px;
+    padding: 0 6px;
     color: #666666;
     position: relative;
     z-index: 1000;
@@ -122,8 +122,8 @@ const tooltipStyles = `
   }
 
   .info-button svg {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     fill: currentColor;
   }
 

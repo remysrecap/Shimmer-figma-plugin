@@ -39,7 +39,9 @@ const customRowStyles = `
   }
 
   .custom-row-toggle {
-    margin-right: 12px;
+    margin-right: 16px;
+    padding-right: 16px;
+    border-right: 1px solid #ffffff;
   }
 
   .custom-row-icon {
@@ -48,15 +50,15 @@ const customRowStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--figma-color-icon, #8d8d8d);
+    color: #b3b3b3;
     cursor: pointer;
     border-radius: 2px;
     position: relative;
   }
 
   .custom-row-icon:hover {
-    background: var(--figma-color-bg-hover, rgba(0, 0, 0, 0.06));
-    color: var(--figma-color-text, #333333);
+    background: rgba(0, 0, 0, 0.06);
+    color: #8d8d8d;
   }
 
   .custom-toggle-switch {

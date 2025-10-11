@@ -86,7 +86,7 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding: 8px 64px 8px 8px;
+    padding: 8px 40px 8px 8px;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -96,7 +96,7 @@ const tooltipStyles = `
     align-items: center;
     justify-content: center;
     padding: 8px 12px;
-    color: #333333;
+    color: #000000;
     position: relative;
     z-index: unset;
   }

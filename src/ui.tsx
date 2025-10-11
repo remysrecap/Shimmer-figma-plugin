@@ -200,7 +200,7 @@ function Plugin() {
   // Tab content components
   function SettingsContent() {
     return (
-      <div>
+      <div style={{ padding: '16px' }}>
         <div className="custom-row">
           <div className="custom-row-label">Automatic font-weight</div>
           <div className="custom-row-toggle">
@@ -221,7 +221,7 @@ function Plugin() {
 
   function AboutContent() {
     return (
-      <div className="tab-content">
+      <div style={{ padding: '16px' }}>
         <Text>
           Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
         </Text>
@@ -248,7 +248,7 @@ function Plugin() {
 
   function DonateContent() {
     return (
-      <div className="tab-content">
+      <div style={{ padding: '16px' }}>
         <Text>Coming soon! We're working on adding donation options to support the development of this plugin.</Text>
         <VerticalSpace space="medium" />
         <Text>Thank you for using Shimmer Effect! 🙏</Text>
@@ -264,24 +264,19 @@ function Plugin() {
 
   return (
     <div>
-      <Container space="medium">
-        <style>{customRowStyles}</style>
-        <VerticalSpace space="large" />
-        
-        <Tabs
-          options={tabs}
-          value={activeTab}
-          onValueChange={setActiveTab}
-        />
-        
-        <VerticalSpace space="medium" />
-        
-        {activeTab === 'Settings' && <SettingsContent />}
-        {activeTab === 'About' && <AboutContent />}
-        {activeTab === 'Donate' && <DonateContent />}
-        
-        <VerticalSpace space="extraLarge" />
-        
+      <style>{customRowStyles}</style>
+      
+      <Tabs
+        options={tabs}
+        value={activeTab}
+        onValueChange={setActiveTab}
+      />
+      
+      {activeTab === 'Settings' && <SettingsContent />}
+      {activeTab === 'About' && <AboutContent />}
+      {activeTab === 'Donate' && <DonateContent />}
+      
+      <div style={{ padding: '16px' }}>
         <Button
           fullWidth
           onClick={handleCreateShimmerButtonClick}
@@ -292,8 +287,7 @@ function Plugin() {
             : 'Select text layer'
           }
         </Button>
-        <VerticalSpace space="small" />
-      </Container>
+      </div>
     </div>
   )
 }

@@ -18,7 +18,7 @@ const tooltipStyles = `
   .row-item {
     display: flex;
     align-items: stretch;
-    padding: 8px 20px 8px 16px;
+    padding: 12px 0;
     margin-bottom: 8px;
     border-radius: 6px;
     background: #F5F5F5;
@@ -27,6 +27,40 @@ const tooltipStyles = `
 
   .row-item:hover {
     background: #EBEBEB;
+  }
+
+  .row-content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
+  .text-action-container {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    padding: 0 12px;
+  }
+
+  .text-label {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    flex-shrink: 0;
   }
 
   .toggle-switch {
@@ -75,44 +109,16 @@ const tooltipStyles = `
     transform: translateX(12px);
   }
 
-  .label {
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    width: 140px;
-    margin-right: 4px;
-  }
-
-  .input-container {
-    flex: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin: -8px 0 -8px 0;
-    padding: 8px 16px 8px 0;
-    border-right: 1.5px solid #FFFFFF;
-  }
-
-  .right-aligned-content {
-    position: absolute;
-    right: 12px;
-    display: flex;
-    align-items: center;
-  }
-
   .info-button {
     width: 20px;
     height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: -8px -8px -8px -8px;
-    padding: 0 6px;
     color: #666666;
     position: relative;
     z-index: 1000;
     cursor: pointer;
-    flex-shrink: 0;
   }
 
   .info-button:hover {
@@ -242,22 +248,30 @@ function Plugin() {
     return (
       <div className="tab-content">
         <div className="row-item">
-          <div className="label">Automatic font-weight</div>
-          <div className="input-container">
-            <div className="right-aligned-content">
-              <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+          <div className="row-content">
+            <div className="text-action-container">
+              <div className="text-label">Automatic font-weight</div>
+              <div className="toggle-container">
+                <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
+              </div>
+            </div>
+            <div className="icon-container">
+              <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
             </div>
           </div>
-          <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
         </div>
         <div className="row-item">
-          <div className="label">Replace text</div>
-          <div className="input-container">
-            <div className="right-aligned-content">
-              <Toggle checked={replaceText} onChange={setReplaceText} />
+          <div className="row-content">
+            <div className="text-action-container">
+              <div className="text-label">Replace text</div>
+              <div className="toggle-container">
+                <Toggle checked={replaceText} onChange={setReplaceText} />
+              </div>
+            </div>
+            <div className="icon-container">
+              <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
             </div>
           </div>
-          <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
         </div>
       </div>
     )

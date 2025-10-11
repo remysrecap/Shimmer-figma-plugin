@@ -2,7 +2,7 @@ import { EventHandler } from '@create-figma-plugin/utilities'
 
 export interface CreateShimmerHandler extends EventHandler {
   name: 'CREATE_SHIMMER'
-  handler: (autoFontWeight: boolean) => void
+  handler: (autoFontWeight: boolean, replaceText: boolean) => void
 }
 
 export interface CloseHandler extends EventHandler {

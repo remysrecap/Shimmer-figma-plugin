@@ -3,7 +3,7 @@ import { emit, once, showUI } from '@create-figma-plugin/utilities'
 import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 export default function () {
-  once<CreateShimmerHandler>('CREATE_SHIMMER', async function (autoFontWeight: boolean) {
+  once<CreateShimmerHandler>('CREATE_SHIMMER', async function (autoFontWeight: boolean, replaceText: boolean) {
     try {
       // Check if text is selected
       const selection = figma.currentPage.selection
@@ -19,9 +19,16 @@ export default function () {
         return
       }
 
+      // Find or create "Shimmer component" page
+      let shimmerPage = figma.root.children.find(page => page.name === 'Shimmer component')
+      if (!shimmerPage) {
+        shimmerPage = figma.createPage()
+        shimmerPage.name = 'Shimmer component'
+      }
+
       // Process each text node
       for (const textNode of textNodes) {
-        await createShimmerEffect(textNode, autoFontWeight)
+        await createShimmerEffect(textNode, autoFontWeight, replaceText, shimmerPage)
       }
 
       figma.notify(`Created shimmer effect for ${textNodes.length} text node(s)`)
@@ -33,7 +40,7 @@ export default function () {
   })
 
   showUI({
-    height: 160,
+    height: 190,
     width: 280
   })
 
@@ -63,7 +70,7 @@ export default function () {
   }
 }
 
-async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean) {
+async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean, replaceText: boolean, shimmerPage: PageNode) {
   // 1. Load font before any text operations
   if (textNode.fontName !== figma.mixed) {
     await figma.loadFontAsync(textNode.fontName)
@@ -239,26 +246,70 @@ async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean) 
     }]
   }])
 
-  // Clean up original text node and cloned text copy
-  try {
-    textNode.remove()
-  } catch (error) {
-    console.log('Text node already removed or doesn\'t exist')
-  }
+  // Store original text position and parent before moving component
+  const originalX = textNode.x
+  const originalY = textNode.y
+  const originalParent = textNode.parent
+
+  // Move component set to shimmer page
+  shimmerPage.appendChild(componentSet)
   
+  // Position component set at a clean location on the shimmer page
+  // Find the rightmost component on the page to place new one next to it
+  let maxX = 0
+  for (const child of shimmerPage.children) {
+    if (child.id !== componentSet.id) {
+      const rightEdge = child.x + child.width
+      if (rightEdge > maxX) {
+        maxX = rightEdge
+      }
+    }
+  }
+  componentSet.x = maxX > 0 ? maxX + 100 : 0
+  componentSet.y = 0
+
+  // Clean up cloned nodes
   try {
     textCopy.remove()
   } catch (error) {
-    console.log('Text copy already removed or doesn\'t exist')
+    // Already removed
   }
   
   try {
     vectorText.remove()
   } catch (error) {
-    console.log('Vector text already removed or doesn\'t exist')
+    // Already removed
   }
 
-  // Select the component set and clear any other selections
-  figma.currentPage.selection = [componentSet]
-  figma.viewport.scrollAndZoomIntoView([componentSet])
+  // Handle text replacement
+  if (replaceText) {
+    // Create an instance of the first component (start state)
+    const instance = component1.createInstance()
+    
+    // Place instance where the original text was
+    if (originalParent && 'appendChild' in originalParent) {
+      originalParent.appendChild(instance)
+    }
+    instance.x = originalX
+    instance.y = originalY
+    
+    // Remove original text node
+    try {
+      textNode.remove()
+    } catch (error) {
+      // Already removed
+    }
+    
+    // Select the instance
+    figma.currentPage.selection = [instance]
+    figma.viewport.scrollAndZoomIntoView([instance])
+  } else {
+    // Keep the original text, just select the component set on shimmer page
+    const currentPage = figma.currentPage
+    figma.currentPage = shimmerPage
+    figma.currentPage.selection = [componentSet]
+    figma.viewport.scrollAndZoomIntoView([componentSet])
+    // Switch back to original page
+    figma.currentPage = currentPage
+  }
 }

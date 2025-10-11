@@ -16,6 +16,7 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 function Plugin() {
   const [autoFontWeight, setAutoFontWeight] = useState<boolean>(true)
+  const [replaceText, setReplaceText] = useState<boolean>(true)
   const [hasValidSelection, setHasValidSelection] = useState<boolean>(false)
   const [selectionCount, setSelectionCount] = useState<number>(0)
   
@@ -30,10 +31,10 @@ function Plugin() {
   const handleCreateShimmerButtonClick = useCallback(
     function () {
       if (hasValidSelection) {
-        emit<CreateShimmerHandler>('CREATE_SHIMMER', autoFontWeight)
+        emit<CreateShimmerHandler>('CREATE_SHIMMER', autoFontWeight, replaceText)
       }
     },
-    [autoFontWeight, hasValidSelection]
+    [autoFontWeight, replaceText, hasValidSelection]
   )
   
   return (
@@ -52,6 +53,18 @@ function Plugin() {
         </Checkbox>
         <IconInfo16 
           title="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect."
+        />
+      </Inline>
+      <VerticalSpace space="small" />
+      <Inline space="extraSmall">
+        <Checkbox
+          onValueChange={setReplaceText}
+          value={replaceText}
+        >
+          <Text>Replace text</Text>
+        </Checkbox>
+        <IconInfo16 
+          title="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page."
         />
       </Inline>
       <VerticalSpace space="extraLarge" />

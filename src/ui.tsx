@@ -107,19 +107,22 @@ const tooltipStyles = `
     justify-content: center;
     margin: -8px -8px -8px -8px;
     padding: 0 12px;
-    color: #333333;
+    color: #666666;
     position: relative;
-    z-index: unset;
+    z-index: 1000;
+    cursor: pointer;
   }
 
   .info-button:hover {
     background: rgba(0, 0, 0, 0.06);
     border-radius: 0 6px 6px 0;
+    color: #333333;
   }
 
   .info-button svg {
     width: 10px;
     height: 10px;
+    fill: currentColor;
   }
 
   .tooltip {
@@ -137,6 +140,7 @@ const tooltipStyles = `
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
+    white-space: normal;
   }
 
   .info-button:hover .tooltip {

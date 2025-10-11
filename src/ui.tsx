@@ -15,6 +15,22 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Custom row styles following create-figma-plugin patterns
 const customRowStyles = `
+  /* Hide titles in tab content */
+  .children h1,
+  .children h2,
+  .children h3,
+  .children h4,
+  .children h5,
+  .children h6,
+  [class*="children"] h1,
+  [class*="children"] h2,
+  [class*="children"] h3,
+  [class*="children"] h4,
+  [class*="children"] h5,
+  [class*="children"] h6 {
+    display: none !important;
+  }
+  
   .custom-row {
     display: flex;
     align-items: center;
@@ -270,8 +286,6 @@ function Plugin() {
         options={tabs}
         value={activeTab}
         onValueChange={setActiveTab}
-        // @ts-ignore - hideTitle prop may exist but not in types
-        hideTitle={true}
       />
       
       {activeTab === 'Settings' && <SettingsContent />}

@@ -18,13 +18,14 @@ const customRowStyles = `
   .custom-row {
     display: flex;
     align-items: center;
-    padding: 8px 12px;
+    padding: 0 12px;
     margin-bottom: 8px;
     border-radius: 6px;
     background: var(--figma-color-bg-secondary, #f5f5f5);
     transition: background-color 0.1s ease;
     font-size: 11px;
     line-height: 16px;
+    min-height: 32px;
   }
 
   .custom-row:hover {
@@ -36,11 +37,12 @@ const customRowStyles = `
     font-weight: 400;
     color: var(--figma-color-text, #000000);
     margin-right: 12px;
+    padding: 8px 0;
   }
 
   .custom-row-toggle {
     margin-right: 8px;
-    padding-right: 8px;
+    padding: 8px 8px 8px 0;
     border-right: 1px solid #ffffff;
     height: 100%;
     display: flex;
@@ -58,6 +60,7 @@ const customRowStyles = `
     border-radius: 2px;
     position: relative;
     margin-left: 8px;
+    padding: 8px 0;
   }
 
   .custom-row-icon:hover {

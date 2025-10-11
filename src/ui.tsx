@@ -50,8 +50,8 @@ const customRowStyles = `
   }
 
   .custom-row-icon {
-    width: 4px;
-    height: 4px;
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,16 +60,12 @@ const customRowStyles = `
     border-radius: 2px;
     position: relative;
     margin-left: 4px;
-    padding: 8px;
   }
 
   .custom-row-icon:hover {
     color: #666666;
   }
 
-  .custom-row-icon:hover .custom-info-icon {
-    background-color: #666666;
-  }
 
   .custom-toggle-switch {
     position: relative;
@@ -117,18 +113,10 @@ const customRowStyles = `
     transform: translateX(12px);
   }
 
-  .custom-info-icon {
-    width: 4px;
-    height: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3px;
-    font-weight: bold;
-    background-color: #8d8d8d;
-    border-radius: 50%;
-    color: white;
-    line-height: 1;
+  .custom-icon svg {
+    width: 8px;
+    height: 8px;
+    fill: currentColor;
   }
 
   .custom-tooltip {
@@ -180,7 +168,14 @@ function Plugin() {
   function CustomInfoIcon({ tooltip }: { tooltip: string }) {
     return (
       <span className="custom-row-icon">
-        <div className="custom-info-icon">i</div>
+        <svg viewBox="0 0 12 12" fill="none" className="custom-icon">
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M6 12A6 6 0 106 0a6 6 0 000 12zM5.333 5.333v4h1.334v-4H5.333zm0-2.666V4h1.334V2.667H5.333z"
+            fill="currentColor"
+          />
+        </svg>
         <div className="custom-tooltip">{tooltip}</div>
       </span>
     )

@@ -19,7 +19,7 @@ const customRowStyles = `
     display: flex;
     align-items: center;
     padding: 0 12px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     border-radius: 6px;
     background: var(--figma-color-bg-secondary, #f5f5f5);
     transition: background-color 0.1s ease;
@@ -200,7 +200,7 @@ function Plugin() {
   // Tab content components
   function SettingsContent() {
     return (
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '12px' }}>
         <div className="custom-row">
           <div className="custom-row-label">Automatic font-weight</div>
           <div className="custom-row-toggle">
@@ -221,7 +221,7 @@ function Plugin() {
 
   function AboutContent() {
     return (
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '12px' }}>
         <Text>
           Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
         </Text>
@@ -248,7 +248,7 @@ function Plugin() {
 
   function DonateContent() {
     return (
-      <div style={{ padding: '16px' }}>
+      <div style={{ padding: '12px' }}>
         <Text>Coming soon! We're working on adding donation options to support the development of this plugin.</Text>
         <VerticalSpace space="medium" />
         <Text>Thank you for using Shimmer Effect! 🙏</Text>

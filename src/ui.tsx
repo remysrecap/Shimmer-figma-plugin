@@ -1,11 +1,5 @@
 import {
-  Button,
-  Container,
-  render,
-  Text,
-  VerticalSpace,
-  Tabs,
-  TabsOption
+  render
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
@@ -13,44 +7,148 @@ import { useCallback, useState, useEffect } from 'preact/hooks'
 
 import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
-// Add tooltip styles
-const tooltipStyles = `
-  .row-item {
+// Custom styles for the entire plugin
+const customStyles = `
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 11px;
+    line-height: 16px;
+    color: #000000;
+    background: #ffffff;
+  }
+
+  .plugin-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+  }
+
+  .plugin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .plugin-title {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  .plugin-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background: #000000;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+
+  .close-button {
+    width: 16px;
+    height: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  .tabs-container {
+    display: flex;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 400;
+    color: #666666;
+    transition: all 0.1s ease;
+  }
+
+  .tab.active {
+    background: #ffffff;
+    font-weight: 500;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+  }
+
+  .tab:hover:not(.active) {
+    background: #f0f0f0;
+    color: #000000;
+  }
+
+  .tab-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  .tab-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 16px;
+  }
+
+  .settings-row {
     display: flex;
     align-items: center;
     padding: 12px 16px;
     margin-bottom: 8px;
     border-radius: 6px;
-    background: #F5F5F5;
+    background: #f5f5f5;
     transition: background-color 0.1s ease;
   }
 
-  .row-item:hover {
-    background: #EBEBEB;
+  .settings-row:hover {
+    background: #ebebeb;
   }
 
-  .row-label {
+  .settings-label {
     flex: 1;
+    font-size: 11px;
     font-weight: 400;
     color: #000000;
   }
 
-  .row-toggle {
+  .settings-toggle {
     margin-right: 16px;
   }
 
-  .row-icon {
+  .settings-icon {
     width: 16px;
     height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #8D8D8D;
+    color: #8d8d8d;
     cursor: pointer;
     border-radius: 2px;
+    position: relative;
   }
 
-  .row-icon:hover {
+  .settings-icon:hover {
     background: rgba(0, 0, 0, 0.06);
     color: #333333;
   }
@@ -59,7 +157,6 @@ const tooltipStyles = `
     position: relative;
     width: 28px;
     height: 16px;
-    flex-shrink: 0;
   }
 
   .toggle-switch input {
@@ -76,9 +173,9 @@ const tooltipStyles = `
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #E5E5E5;
-    transition: .2s;
-    border-radius: 34px;
+    background-color: #e5e5e5;
+    transition: 0.2s;
+    border-radius: 16px;
   }
 
   .toggle-slider:before {
@@ -89,22 +186,16 @@ const tooltipStyles = `
     left: 2px;
     bottom: 2px;
     background-color: white;
-    transition: .2s;
+    transition: 0.2s;
     border-radius: 50%;
   }
 
   .toggle-switch input:checked + .toggle-slider {
-    background-color: #18A0FB;
+    background-color: #18a0fb;
   }
 
   .toggle-switch input:checked + .toggle-slider:before {
     transform: translateX(12px);
-  }
-
-  .info-icon svg {
-    width: 10px;
-    height: 10px;
-    fill: currentColor;
   }
 
   .tooltip {
@@ -125,40 +216,60 @@ const tooltipStyles = `
     white-space: normal;
   }
 
-  .info-button:hover .tooltip {
+  .settings-icon:hover .tooltip {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .tab-content {
-    min-height: 200px;
-    padding: 16px;
-  }
-
   .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: white;
-    border-top: 1px solid var(--figma-color-border);
     padding: 16px;
-    z-index: 1000;
+    border-top: 1px solid #e5e5e5;
+    background: #ffffff;
   }
 
-  .main-content {
-    padding-bottom: 80px; /* Space for fixed footer */
+  .action-button {
+    width: 100%;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    border: none;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.1s ease;
   }
 
-  /* Remove default container padding and make tabs flush */
-  .plugin-container {
-    padding: 0 !important;
+  .action-button:enabled {
+    background: #18a0fb;
+    color: #ffffff;
   }
 
-  .tabs-container {
-    margin: 0 -16px;
-    padding: 0 16px;
-    margin-top: -16px; /* Move tabs to y=0 */
+  .action-button:hover:enabled {
+    background: #0d8ce8;
+  }
+
+  .about-content {
+    font-size: 11px;
+    line-height: 16px;
+    color: #000000;
+  }
+
+  .about-content p {
+    margin-bottom: 12px;
+  }
+
+  .about-content strong {
+    font-weight: 600;
+  }
+
+  .about-content ul {
+    margin-left: 16px;
+    margin-bottom: 12px;
+  }
+
+  .about-content li {
+    margin-bottom: 4px;
   }
 `
 
@@ -220,22 +331,23 @@ function Plugin() {
   // Tab content components
   function SettingsContent() {
     return (
-      <div className="tab-content">
-        <div className="row-item">
-          <div className="row-label">Automatic font-weight</div>
-          <div className="row-toggle">
+      <div>
+        <div className="tab-title">Settings</div>
+        <div className="settings-row">
+          <div className="settings-label">Automatic font-weight</div>
+          <div className="settings-toggle">
             <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
           </div>
-          <div className="row-icon">
+          <div className="settings-icon">
             <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
           </div>
         </div>
-        <div className="row-item">
-          <div className="row-label">Replace text</div>
-          <div className="row-toggle">
+        <div className="settings-row">
+          <div className="settings-label">Replace text</div>
+          <div className="settings-toggle">
             <Toggle checked={replaceText} onChange={setReplaceText} />
           </div>
-          <div className="row-icon">
+          <div className="settings-icon">
             <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
           </div>
         </div>
@@ -245,72 +357,74 @@ function Plugin() {
 
   function AboutContent() {
     return (
-      <div className="tab-content">
-        <Text>
-          Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
-        </Text>
-        <VerticalSpace space="medium" />
-        <Text>
-          <strong>Features:</strong>
-        </Text>
-        <VerticalSpace space="small" />
-        <Text>• Automatic font-weight optimization</Text>
-        <Text>• Hollow text with gradient animation</Text>
-        <Text>• Component set creation with prototyping</Text>
-        <Text>• Dedicated component page organization</Text>
-        <Text>• Text replacement options</Text>
-        <VerticalSpace space="medium" />
-        <Text>
-          <strong>Version:</strong> 1.0.0
-        </Text>
-        <Text>
-          <strong>Author:</strong> Shimmer Plugin Team
-        </Text>
+      <div className="about-content">
+        <p>Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.</p>
+        <p><strong>Features:</strong></p>
+        <ul>
+          <li>Automatic font-weight optimization</li>
+          <li>Hollow text with gradient animation</li>
+          <li>Component set creation with prototyping</li>
+          <li>Dedicated component page organization</li>
+          <li>Text replacement options</li>
+        </ul>
+        <p><strong>Version:</strong> 1.0.0</p>
+        <p><strong>Author:</strong> Shimmer Plugin Team</p>
       </div>
     )
   }
 
   function DonateContent() {
     return (
-      <div className="tab-content">
-        <Text>Coming soon! We're working on adding donation options to support the development of this plugin.</Text>
-        <VerticalSpace space="medium" />
-        <Text>Thank you for using Shimmer Effect! 🙏</Text>
+      <div className="about-content">
+        <p>Coming soon! We're working on adding donation options to support the development of this plugin.</p>
+        <p>Thank you for using Shimmer Effect! 🙏</p>
       </div>
     )
   }
 
-  const tabs: TabsOption[] = [
-    { value: 'Settings', children: 'Settings' },
-    { value: 'About', children: 'About' },
-    { value: 'Donate', children: 'Donate' }
-  ]
 
   return (
-    <div className="main-content">
-      <Container space="medium" className="plugin-container">
-        <style>{tooltipStyles}</style>
-        <VerticalSpace space="large" />
-        
-        <div className="tabs-container">
-          <Tabs
-            options={tabs}
-            value={activeTab}
-            onValueChange={setActiveTab}
-          />
+    <div className="plugin-container">
+      <style>{customStyles}</style>
+      
+      <div className="plugin-header">
+        <div className="plugin-title">
+          <div className="plugin-icon">&lt;/&gt;</div>
+          Shimmer
         </div>
-        
-        <VerticalSpace space="medium" />
-        
+        <button className="close-button">×</button>
+      </div>
+      
+      <div className="tabs-container">
+        <button 
+          className={`tab ${activeTab === 'Settings' ? 'active' : ''}`}
+          onClick={() => setActiveTab('Settings')}
+        >
+          Settings
+        </button>
+        <button 
+          className={`tab ${activeTab === 'About' ? 'active' : ''}`}
+          onClick={() => setActiveTab('About')}
+        >
+          About
+        </button>
+        <button 
+          className={`tab ${activeTab === 'Donate' ? 'active' : ''}`}
+          onClick={() => setActiveTab('Donate')}
+        >
+          Donate
+        </button>
+      </div>
+      
+      <div className="tab-content">
         {activeTab === 'Settings' && <SettingsContent />}
         {activeTab === 'About' && <AboutContent />}
         {activeTab === 'Donate' && <DonateContent />}
-        
-      </Container>
+      </div>
       
       <div className="footer">
-        <Button
-          fullWidth
+        <button
+          className="action-button"
           onClick={handleCreateShimmerButtonClick}
           disabled={!hasValidSelection}
         >
@@ -318,7 +432,7 @@ function Plugin() {
             ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
             : 'Select text layer'
           }
-        </Button>
+        </button>
       </div>
     </div>
   )

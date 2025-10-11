@@ -15,6 +15,12 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Custom row styles following create-figma-plugin patterns
 const customRowStyles = `
+  /* Hide any titles that the Tabs component might add */
+  [data-tab-title], 
+  .tab-title,
+  h1, h2, h3, h4, h5, h6 {
+    display: none !important;
+  }
   .custom-row {
     display: flex;
     align-items: center;

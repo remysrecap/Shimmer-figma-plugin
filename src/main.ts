@@ -39,10 +39,10 @@ export default function () {
     }
   })
 
-  showUI({
-    height: 190,
-    width: 280
-  })
+        showUI({
+          height: 380,
+          width: 280
+        })
 
   // Wait for UI to be ready, then check initial selection
   setTimeout(() => {

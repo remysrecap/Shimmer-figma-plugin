@@ -15,8 +15,8 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 const tooltipStyles = `
   .row-item {
     display: flex;
-    align-items: center;
-    padding: 8px;
+    align-items: stretch;
+    padding: 0;
     margin-bottom: 8px;
     border-radius: 6px;
     background: #F5F5F5;
@@ -73,12 +73,17 @@ const tooltipStyles = `
     transform: translateX(12px);
   }
 
-  .toggle-container {
+  .text-container {
     flex: 1;
     display: flex;
     align-items: center;
-    margin: -8px 8px -8px 0;
-    padding: 8px 48px 8px 0;
+    padding: 8px 0 8px 8px;
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px 8px 8px;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -87,8 +92,7 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: -8px -8px -8px -8px;
-    padding: 0 4px;
+    padding: 8px 12px;
     color: #8D8D8D;
     position: relative;
     z-index: unset;
@@ -191,19 +195,25 @@ function Plugin() {
       <VerticalSpace space="medium" />
 
       <div className="row-item">
-        <Text style={{ flex: 1 }}>Automatic font-weight</Text>
+        <div className="text-container">
+          <Text>Automatic font-weight</Text>
+        </div>
         <div className="toggle-container">
           <Toggle checked={autoFontWeight} onChange={setAutoFontWeight} />
         </div>
         <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
       </div>
       <div className="row-item">
-        <Text style={{ flex: 1 }}>Replace text</Text>
+        <div className="text-container">
+          <Text>Replace text</Text>
+        </div>
         <div className="toggle-container">
           <Toggle checked={replaceText} onChange={setReplaceText} />
         </div>
         <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
       </div>
+      <VerticalSpace space="extraLarge" />
+      <VerticalSpace space="extraLarge" />
       <VerticalSpace space="extraLarge" />
 
       <Button
@@ -216,7 +226,8 @@ function Plugin() {
           : 'Select text layer'
         }
       </Button>
-      <VerticalSpace space="small" />
+      <VerticalSpace space="large" />
+      <VerticalSpace space="large" />
     </Container>
   )
 }

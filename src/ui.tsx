@@ -55,7 +55,7 @@ const customRowStyles = `
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #b3b3b3;
+    color: #8d8d8d;
     cursor: pointer;
     border-radius: 2px;
     position: relative;
@@ -64,7 +64,7 @@ const customRowStyles = `
   }
 
   .custom-row-icon:hover {
-    color: #8d8d8d;
+    color: #666666;
   }
 
   .custom-toggle-switch {

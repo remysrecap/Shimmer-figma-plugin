@@ -15,46 +15,50 @@ import { CreateShimmerHandler, SelectionChangeHandler } from './types'
 
 // Add tooltip styles
 const tooltipStyles = `
+  .checkbox-with-tooltip {
+    display: flex;
+    align-items: center;
+  }
+
   .info-button {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--figma-color-icon, #8D8D8D);
+    color: #B3B3B3;
     position: relative;
     cursor: help;
-    vertical-align: middle;
-    margin-left: 4px;
+    flex-shrink: 0;
+    margin-left: 6px;
+    margin-top: 1px;
   }
 
   .info-button:hover {
-    color: var(--figma-color-text, #000000);
+    color: #8D8D8D;
   }
 
   .info-button svg {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
   }
 
   .tooltip {
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 8px);
-    transform: translateX(-50%);
+    position: fixed;
     background: rgba(0, 0, 0, 0.9);
     color: white;
-    padding: 6px 8px;
+    padding: 8px 12px;
     border-radius: 4px;
     font-size: 11px;
     line-height: 16px;
-    width: 200px;
+    width: 220px;
     z-index: 10000;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s;
     white-space: normal;
     text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .info-button:hover .tooltip {
@@ -62,21 +66,31 @@ const tooltipStyles = `
     pointer-events: auto;
   }
 
-  .tooltip::after {
+  .tooltip::before {
     content: '';
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-top-color: rgba(0, 0, 0, 0.9);
+    bottom: 100%;
+    left: 12px;
+    border: 5px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.9);
   }
 `
 
 // Info icon component
 function InfoIcon({ tooltip }: { tooltip: string }) {
+  const [tooltipStyle, setTooltipStyle] = useState<any>({})
+  const iconRef = useCallback((node: HTMLElement | null) => {
+    if (node) {
+      const rect = node.getBoundingClientRect()
+      setTooltipStyle({
+        top: `${rect.bottom + 8}px`,
+        left: `${rect.left - 12}px`
+      })
+    }
+  }, [])
+
   return (
-    <span className="info-button">
+    <span className="info-button" ref={iconRef}>
       <svg viewBox="0 0 12 12" fill="none">
         <path
           fill-rule="evenodd"
@@ -85,7 +99,7 @@ function InfoIcon({ tooltip }: { tooltip: string }) {
           fill="currentColor"
         />
       </svg>
-      <div className="tooltip">{tooltip}</div>
+      <div className="tooltip" style={tooltipStyle}>{tooltip}</div>
     </span>
   )
 }
@@ -121,7 +135,7 @@ function Plugin() {
         <strong>Shimmer Effect</strong>
       </Text>
       <VerticalSpace space="medium" />
-      <Inline space="extraSmall">
+      <div className="checkbox-with-tooltip">
         <Checkbox
           onValueChange={setAutoFontWeight}
           value={autoFontWeight}
@@ -129,9 +143,9 @@ function Plugin() {
           <Text>Automatic font-weight</Text>
         </Checkbox>
         <InfoIcon tooltip="If checked and the font weight is less than semibold (<500), we will automatically make it bold for the best shimmer effect." />
-      </Inline>
+      </div>
       <VerticalSpace space="small" />
-      <Inline space="extraSmall">
+      <div className="checkbox-with-tooltip">
         <Checkbox
           onValueChange={setReplaceText}
           value={replaceText}
@@ -139,7 +153,7 @@ function Plugin() {
           <Text>Replace text</Text>
         </Checkbox>
         <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
-      </Inline>
+      </div>
       <VerticalSpace space="extraLarge" />
       <Button 
         fullWidth 

@@ -18,7 +18,7 @@ const tooltipStyles = `
   .row-item {
     display: flex;
     align-items: stretch;
-    padding: 0;
+    padding: 8px 16px;
     margin-bottom: 8px;
     border-radius: 6px;
     background: #F5F5F5;
@@ -89,7 +89,7 @@ const tooltipStyles = `
     display: flex;
     align-items: center;
     margin: -8px 8px -8px 0;
-    padding: 8px 48px 8px 0;
+    padding: 8px 32px 8px 0;
     border-right: 1.5px solid #FFFFFF;
   }
 
@@ -106,8 +106,8 @@ const tooltipStyles = `
     align-items: center;
     justify-content: center;
     margin: -8px -8px -8px -8px;
-    padding: 0 4px;
-    color: #8D8D8D;
+    padding: 0 12px;
+    color: #333333;
     position: relative;
     z-index: unset;
   }
@@ -146,7 +146,7 @@ const tooltipStyles = `
 
   .tab-content {
     min-height: 200px;
-    padding: 0;
+    padding: 16px;
   }
 
   .footer {
@@ -172,6 +172,7 @@ const tooltipStyles = `
   .tabs-container {
     margin: 0 -16px;
     padding: 0 16px;
+    margin-top: -16px; /* Move tabs to y=0 */
   }
 `
 

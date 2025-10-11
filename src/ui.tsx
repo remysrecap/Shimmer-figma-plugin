@@ -39,14 +39,17 @@ const customRowStyles = `
   }
 
   .custom-row-toggle {
-    margin-right: 16px;
-    padding-right: 16px;
+    margin-right: 8px;
+    padding-right: 8px;
     border-right: 1px solid #ffffff;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .custom-row-icon {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,6 +57,7 @@ const customRowStyles = `
     cursor: pointer;
     border-radius: 2px;
     position: relative;
+    margin-left: 8px;
   }
 
   .custom-row-icon:hover {
@@ -108,8 +112,8 @@ const customRowStyles = `
   }
 
   .custom-icon svg {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     fill: currentColor;
   }
 

@@ -16,7 +16,61 @@ const tooltipStyles = `
   .row-item {
     display: flex;
     align-items: center;
-    padding: 8px 0;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    background: #F5F5F5;
+    transition: background-color 0.1s ease;
+  }
+
+  .row-item:hover {
+    background: #EBEBEB;
+  }
+
+  .toggle-switch {
+    position: relative;
+    width: 28px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E5E5E5;
+    transition: .2s;
+    border-radius: 34px;
+  }
+
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+  }
+
+  .toggle-switch input:checked + .toggle-slider {
+    background-color: #18A0FB;
+  }
+
+  .toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(12px);
   }
 
   .info-button {
@@ -29,7 +83,7 @@ const tooltipStyles = `
     position: relative;
     cursor: help;
     flex-shrink: 0;
-    margin-left: 6px;
+    margin-left: 8px;
     margin-top: 1px;
   }
 
@@ -150,9 +204,6 @@ function Plugin() {
         <strong>Shimmer Effect</strong>
       </Text>
       <VerticalSpace space="medium" />
-      {/* Separator after title */}
-      <div style={{ borderBottom: '1px solid var(--figma-color-border)', margin: '0 -16px' }}></div>
-      <VerticalSpace space="small" />
 
       <div className="row-item">
         <Text style={{ flex: 1 }}>Automatic font-weight</Text>
@@ -165,9 +216,6 @@ function Plugin() {
         <InfoIcon tooltip="If checked, the plugin will replace the selected text with an instance of the animated component. The component will be created on a separate 'Shimmer component' page." />
       </div>
       <VerticalSpace space="extraLarge" />
-      {/* Separator before button */}
-      <div style={{ borderBottom: '1px solid var(--figma-color-border)', margin: '0 -16px' }}></div>
-      <VerticalSpace space="small" />
 
       <Button
         fullWidth

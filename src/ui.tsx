@@ -234,65 +234,62 @@ function Plugin() {
 
   function AboutContent() {
     const howItWorksContent = (
-      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
-        <Text>The Shimmer Effect plugin transforms your text into animated loading components through a series of automated steps:</Text>
-        <VerticalSpace space="medium" />
-        <Text><strong>1. Text Analysis</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The plugin analyzes your selected text layer, checking its font weight and dimensions.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>2. Vector Conversion</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is converted to vector paths and styled with a hollow/outlined appearance using masking.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>3. Layer Creation</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>A light grey background and white gradient layer are added to create the shimmer effect.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>4. Component Generation</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two component variants are created (start and end states) and combined into a component set.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>5. Animation Setup</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Smart animate prototyping is configured to create the smooth shimmer animation loop.</Text>
+      <div style={{ padding: '12px' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+          Select text, click Create Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
+        </p>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Vector Conversion</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is flattened to vectors with hollow styling</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Shimmer Effect</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient animates across the text</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Component Set</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two variants with smart animate prototyping</span>
+        </div>
       </div>
     )
 
     const animationSettingsContent = (
-      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
-        <Text>The shimmer animation uses carefully tuned timing and easing for optimal visual effect:</Text>
-        <VerticalSpace space="medium" />
-        <Text><strong>Animation Duration</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The gradient sweep takes 1200ms (1.2 seconds) to travel across the text.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Initial Delay</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>A 600ms delay occurs before the animation starts, creating a natural pause.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Easing</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Ease-out easing is applied for smooth deceleration at the end of the animation.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Loop Behavior</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The animation instantly resets after completion with a 1ms delay, creating a seamless loop.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Gradient Design</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient fades from 0% to 100% opacity at center, then back to 0%, creating a natural shimmer.</Text>
+      <div style={{ padding: '12px' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+          The animation uses a 1.2s gradient sweep with ease-out easing, a 600ms initial delay, and instantly loops.
+        </p>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Duration</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>1200ms sweep with ease-out easing</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Timing</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>600ms delay before start, 1ms instant loop</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Gradient</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>0% → 100% → 0% opacity white gradient</span>
+        </div>
       </div>
     )
 
     const componentOrgContent = (
-      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
-        <Text>The plugin organizes generated components in a dedicated page for easy management:</Text>
-        <VerticalSpace space="medium" />
-        <Text><strong>Shimmer Component Page</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>All shimmer components are automatically placed on a page called "Shimmer component".</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Reusable Components</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Components are created as variants, making them easy to reuse and maintain across your design.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Component Styling</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Component sets have a distinctive purple dashed outline (#9747FF) for easy identification.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Instance Placement</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>When "Replace text" is enabled, an instance is placed at the original text location.</Text>
-        <VerticalSpace space="small" />
-        <Text><strong>Page Management</strong></Text>
-        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>If the page already exists, new components are added there; otherwise, a new page is created.</Text>
+      <div style={{ padding: '12px' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+          Components are organized on a dedicated "Shimmer component" page with purple dashed outlines for easy identification.
+        </p>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Page Structure</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Auto-created or reused "Shimmer component" page</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Component Style</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Purple dashed outline (#9747FF) with 30% fill</span>
+        </div>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+          <strong style={{ display: 'block', marginBottom: '2px' }}>Text Replacement</strong>
+          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Optional instance placement at original location</span>
+        </div>
       </div>
     )
 

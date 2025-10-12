@@ -235,8 +235,11 @@ function Plugin() {
   function AboutContent() {
     const howItWorksContent = (
       <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+          Select text, click Generate Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
+        </p>
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0', color: 'rgba(0, 0, 0, 0.8)' }}>
-          Select text, click Create Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
+          All components are organized on a dedicated "Shimmer component" page. If this page doesn't exist, it's automatically created. If it already exists, new components are added there for easy management and reuse.
         </p>
       </div>
     )

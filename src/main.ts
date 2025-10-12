@@ -106,11 +106,11 @@ async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean, 
   background.resize(hollowText.width, hollowText.height)
   background.x = hollowText.x
   background.y = hollowText.y
-  background.fills = [{
-    type: 'SOLID',
-    color: { r: 0.9, g: 0.9, b: 0.9 }, // Light grey
-    opacity: 0.5
-  }]
+         background.fills = [{
+           type: 'SOLID',
+           color: { r: 0.9, g: 0.9, b: 0.9 }, // Light grey
+           opacity: 0.3
+         }]
 
   // 5. Create gradient rectangle for shimmer effect
   const gradient = figma.createRectangle()

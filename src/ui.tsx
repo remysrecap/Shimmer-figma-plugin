@@ -235,41 +235,17 @@ function Plugin() {
   function AboutContent() {
     const howItWorksContent = (
       <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
-        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0', color: 'rgba(0, 0, 0, 0.8)' }}>
           Select text, click Create Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Vector Conversion</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is flattened to vectors with hollow styling</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Shimmer Effect</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient animates across the text</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Component Set</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two variants with smart animate prototyping</span>
-        </div>
       </div>
     )
 
     const animationSettingsContent = (
       <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
-        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
+        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0', color: 'rgba(0, 0, 0, 0.8)' }}>
           The animation uses a 1.2s gradient sweep with ease-out easing, a 600ms initial delay, and instantly loops.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Duration</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>1200ms sweep with ease-out easing</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Timing</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>600ms delay before start, 1ms instant loop</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Gradient</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>0% → 100% → 0% opacity white gradient</span>
-        </div>
       </div>
     )
 
@@ -360,8 +336,7 @@ function Plugin() {
 
   const tabs: TabsOption[] = [
     { value: 'Settings', children: null },
-    { value: 'About', children: null },
-    { value: 'Donate', children: null }
+    { value: 'About', children: null }
   ]
 
   return (
@@ -381,7 +356,7 @@ function Plugin() {
       </div>
       
       {activeTab === 'Settings' && (
-        <div style={{ padding: '16px', borderTop: '1px solid var(--figma-color-border, #e5e5e5)' }}>
+        <div style={{ padding: '12px 16px', borderTop: '1px solid var(--figma-color-border, #e5e5e5)' }}>
           <Button
             fullWidth
             onClick={handleCreateShimmerButtonClick}

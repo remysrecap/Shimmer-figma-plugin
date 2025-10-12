@@ -215,18 +215,18 @@ function Plugin() {
     return (
       <div style={{ padding: '12px' }}>
         <div className="custom-row">
-          <div className="custom-row-label">Automatic font-weight</div>
+          <div className="custom-row-label">Auto-bold adjustment</div>
           <div className="custom-row-toggle">
             <CustomToggle checked={autoFontWeight} onChange={setAutoFontWeight} />
           </div>
-          <CustomInfoIcon tooltip="If the selected text has a font weight that's too light for the shimmer effect, it will be automatically made bold for better visibility." />
+          <CustomInfoIcon tooltip="Automatically update font-weights to bold to ensure better visibility of the shimmer effect." />
         </div>
         <div className="custom-row">
-          <div className="custom-row-label">Replace text</div>
+          <div className="custom-row-label">Replace text layer</div>
           <div className="custom-row-toggle">
             <CustomToggle checked={replaceText} onChange={setReplaceText} />
           </div>
-          <CustomInfoIcon tooltip="If the original text should be replaced with the shimmer component, it will be swapped out. If not, the original text stays and the component is created on the 'Shimmer component' page." />
+          <CustomInfoIcon tooltip="Replace the selected text layer with an instance of the animated component." />
         </div>
       </div>
     )

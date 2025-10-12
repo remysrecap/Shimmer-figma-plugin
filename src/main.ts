@@ -81,9 +81,44 @@ async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean, 
   }
   
   // 2. Check and optionally increase font weight
-  if (autoFontWeight && typeof textNode.fontWeight === 'number' && textNode.fontWeight < 500) {
-    // Font weight modification is read-only
-    // User should manually make text bold before using the plugin for best results
+  if (autoFontWeight && textNode.fontName !== figma.mixed) {
+    const currentFont = textNode.fontName as FontName
+    
+    // Only try to make bold if current weight is less than semibold (500)
+    if (typeof textNode.fontWeight === 'number' && textNode.fontWeight < 500) {
+      // Try to find a bolder font variant
+      // Priority: 700 (Bold), 800+ (ExtraBold/Black), 600 (Semibold), 500 (Medium)
+      const weightOptions = [
+        { weight: 700, styles: ['Bold', '700'] },
+        { weight: 800, styles: ['ExtraBold', 'Extra Bold', 'Extrabold', '800'] },
+        { weight: 900, styles: ['Black', 'Heavy', '900'] },
+        { weight: 600, styles: ['Semibold', 'SemiBold', 'Semi Bold', 'Demi Bold', 'DemiBold', '600'] },
+        { weight: 500, styles: ['Medium', '500'] }
+      ]
+      
+      let boldApplied = false
+      
+      for (const option of weightOptions) {
+        for (const style of option.styles) {
+          try {
+            const boldFont = { family: currentFont.family, style: style }
+            await figma.loadFontAsync(boldFont)
+            textNode.fontName = boldFont
+            boldApplied = true
+            console.log(`Applied ${style} weight to improve shimmer visibility`)
+            break
+          } catch (error) {
+            // This style doesn't exist, try next one
+            continue
+          }
+        }
+        if (boldApplied) break
+      }
+      
+      if (!boldApplied) {
+        console.warn(`No bold variant found for ${currentFont.family}. Shimmer effect may be less visible with light font weights.`)
+      }
+    }
   }
 
   // 3. Convert text to vector using flatten method and create hollow effect

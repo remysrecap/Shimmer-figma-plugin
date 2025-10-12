@@ -234,19 +234,19 @@ function Plugin() {
 
   function AboutContent() {
     const howItWorksContent = (
-      <div style={{ padding: '12px' }}>
+      <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
           Select text, click Create Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Vector Conversion</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is flattened to vectors with hollow styling</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Shimmer Effect</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient animates across the text</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Component Set</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two variants with smart animate prototyping</span>
         </div>
@@ -254,41 +254,21 @@ function Plugin() {
     )
 
     const animationSettingsContent = (
-      <div style={{ padding: '12px' }}>
+      <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
           The animation uses a 1.2s gradient sweep with ease-out easing, a 600ms initial delay, and instantly loops.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Duration</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>1200ms sweep with ease-out easing</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Timing</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>600ms delay before start, 1ms instant loop</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Gradient</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>0% → 100% → 0% opacity white gradient</span>
-        </div>
-      </div>
-    )
-
-    const componentOrgContent = (
-      <div style={{ padding: '12px' }}>
-        <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
-          Components are organized on a dedicated "Shimmer component" page with purple dashed outlines for easy identification.
-        </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Page Structure</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Auto-created or reused "Shimmer component" page</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Component Style</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Purple dashed outline (#9747FF) with 30% fill</span>
-        </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px' }}>
-          <strong style={{ display: 'block', marginBottom: '2px' }}>Text Replacement</strong>
-          <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Optional instance placement at original location</span>
         </div>
       </div>
     )
@@ -322,7 +302,7 @@ function Plugin() {
             marginTop: '4px',
             color: 'rgba(0, 0, 0, 0.8)'
           }}>
-            Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
+            Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components.
           </p>
         </div>
 
@@ -359,24 +339,6 @@ function Plugin() {
             }}
           >
             <span style={{ fontSize: '11px', fontWeight: '400' }}>Animation settings</span>
-            <svg width="9" height="6" viewBox="0 0 9 6" fill="none" style={{ opacity: 0.3 }}>
-              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <div 
-            onClick={() => handleOpenModal('Component organization', componentOrgContent)}
-            style={{
-              background: 'var(--figma-color-row-bg, #F5F5F5)',
-              borderRadius: '6px',
-              padding: '8px',
-              marginBottom: '8px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              cursor: 'pointer'
-            }}
-          >
-            <span style={{ fontSize: '11px', fontWeight: '400' }}>Component organization</span>
             <svg width="9" height="6" viewBox="0 0 9 6" fill="none" style={{ opacity: 0.3 }}>
               <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

@@ -363,7 +363,7 @@ function Plugin() {
             disabled={!hasValidSelection}
           >
             {hasValidSelection
-              ? `Create Shimmer (${selectionCount} text layer${selectionCount !== 1 ? 's' : ''})`
+              ? (replaceText ? 'Generate and replace' : 'Generate shimmer')
               : 'Select text layer'
             }
           </Button>

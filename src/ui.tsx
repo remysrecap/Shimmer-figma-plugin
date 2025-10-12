@@ -360,11 +360,13 @@ function Plugin() {
           <Button
             fullWidth
             onClick={handleCreateShimmerButtonClick}
-            disabled={!hasValidSelection}
+            disabled={!hasValidSelection || selectionCount > 1}
           >
-            {hasValidSelection
-              ? (replaceText ? 'Generate and replace' : 'Generate shimmer')
-              : 'Select text layer'
+            {!hasValidSelection
+              ? 'Select text layer'
+              : selectionCount > 1
+              ? 'Select single text layer'
+              : (replaceText ? 'Generate and replace' : 'Generate shimmer')
             }
           </Button>
         </div>

@@ -8,14 +8,20 @@ export default function () {
       // Check if text is selected
       const selection = figma.currentPage.selection
       if (selection.length === 0) {
-        figma.notify('Please select some text first', { error: true })
+        figma.notify('Please select a text layer', { error: true })
         return
       }
 
       // Check if selection is text
       const textNodes = selection.filter(node => node.type === 'TEXT') as TextNode[]
       if (textNodes.length === 0) {
-        figma.notify('Please select text nodes only', { error: true })
+        figma.notify('Please select a text layer', { error: true })
+        return
+      }
+
+      // Check if only one text node is selected
+      if (textNodes.length > 1) {
+        figma.notify('Please select only one text layer', { error: true })
         return
       }
 
@@ -26,12 +32,10 @@ export default function () {
         shimmerPage.name = 'Shimmer component'
       }
 
-      // Process each text node
-      for (const textNode of textNodes) {
-        await createShimmerEffect(textNode, autoFontWeight, replaceText, shimmerPage)
-      }
+      // Process the single text node
+      await createShimmerEffect(textNodes[0], autoFontWeight, replaceText, shimmerPage)
 
-      figma.notify(`Created shimmer effect for ${textNodes.length} text node(s)`)
+      figma.notify('Created shimmer effect')
       figma.closePlugin()
     } catch (error) {
       console.error('Error creating shimmer effect:', error)

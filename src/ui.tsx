@@ -219,7 +219,7 @@ function Plugin() {
           <div className="custom-row-toggle">
             <CustomToggle checked={autoFontWeight} onChange={setAutoFontWeight} />
           </div>
-          <CustomInfoIcon tooltip="Automatically update font-weights to bold to ensure better visibility of the shimmer effect." />
+          <CustomInfoIcon tooltip="Automatically adjust font weight to bolder alternative to ensure better visibility of the shimmer effect." />
         </div>
         <div className="custom-row">
           <div className="custom-row-label">Replace text layer</div>

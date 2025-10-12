@@ -5,10 +5,11 @@ import {
   Text,
   VerticalSpace,
   Tabs,
-  TabsOption
+  TabsOption,
+  Modal
 } from '@create-figma-plugin/ui'
 import { emit, on } from '@create-figma-plugin/utilities'
-import { h } from 'preact'
+import { h, JSX } from 'preact'
 import { useCallback, useState, useEffect } from 'preact/hooks'
 
 import { CreateShimmerHandler, SelectionChangeHandler } from './types'
@@ -163,6 +164,8 @@ function Plugin() {
   const [hasValidSelection, setHasValidSelection] = useState<boolean>(false)
   const [selectionCount, setSelectionCount] = useState<number>(0)
   const [activeTab, setActiveTab] = useState<string>('Settings')
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [modalContent, setModalContent] = useState<{ title: string; content: JSX.Element } | null>(null)
 
   // Custom Info icon component
   function CustomInfoIcon({ tooltip }: { tooltip: string }) {
@@ -198,6 +201,15 @@ function Plugin() {
     [autoFontWeight, replaceText, hasValidSelection]
   )
 
+  const handleOpenModal = useCallback((title: string, content: JSX.Element) => {
+    setModalContent({ title, content })
+    setModalOpen(true)
+  }, [])
+
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false)
+  }, [])
+
   // Tab content components
   function SettingsContent() {
     return (
@@ -221,37 +233,158 @@ function Plugin() {
   }
 
   function AboutContent() {
+    const howItWorksContent = (
+      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
+        <Text>The Shimmer Effect plugin transforms your text into animated loading components through a series of automated steps:</Text>
+        <VerticalSpace space="medium" />
+        <Text><strong>1. Text Analysis</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The plugin analyzes your selected text layer, checking its font weight and dimensions.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>2. Vector Conversion</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is converted to vector paths and styled with a hollow/outlined appearance using masking.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>3. Layer Creation</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>A light grey background and white gradient layer are added to create the shimmer effect.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>4. Component Generation</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two component variants are created (start and end states) and combined into a component set.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>5. Animation Setup</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Smart animate prototyping is configured to create the smooth shimmer animation loop.</Text>
+      </div>
+    )
+
+    const animationSettingsContent = (
+      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
+        <Text>The shimmer animation uses carefully tuned timing and easing for optimal visual effect:</Text>
+        <VerticalSpace space="medium" />
+        <Text><strong>Animation Duration</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The gradient sweep takes 1200ms (1.2 seconds) to travel across the text.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Initial Delay</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>A 600ms delay occurs before the animation starts, creating a natural pause.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Easing</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Ease-out easing is applied for smooth deceleration at the end of the animation.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Loop Behavior</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>The animation instantly resets after completion with a 1ms delay, creating a seamless loop.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Gradient Design</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient fades from 0% to 100% opacity at center, then back to 0%, creating a natural shimmer.</Text>
+      </div>
+    )
+
+    const componentOrgContent = (
+      <div style={{ padding: '12px', fontSize: '11px', lineHeight: '16px' }}>
+        <Text>The plugin organizes generated components in a dedicated page for easy management:</Text>
+        <VerticalSpace space="medium" />
+        <Text><strong>Shimmer Component Page</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>All shimmer components are automatically placed on a page called "Shimmer component".</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Reusable Components</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Components are created as variants, making them easy to reuse and maintain across your design.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Component Styling</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Component sets have a distinctive purple dashed outline (#9747FF) for easy identification.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Instance Placement</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>When "Replace text" is enabled, an instance is placed at the original text location.</Text>
+        <VerticalSpace space="small" />
+        <Text><strong>Page Management</strong></Text>
+        <Text style={{ color: 'rgba(0, 0, 0, 0.8)' }}>If the page already exists, new components are added there; otherwise, a new page is created.</Text>
+      </div>
+    )
+
     return (
       <div style={{ padding: '12px' }}>
-        <Text>
-          Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
-        </Text>
-        
-        <VerticalSpace space="medium" />
-        
-        <Text>
-          <strong>Features:</strong>
-        </Text>
-        
-        <VerticalSpace space="small" />
-        
-        <Text>• Automatic font-weight optimization</Text>
-        <Text>• Hollow text with gradient animation</Text>
-        <Text>• Component set creation with prototyping</Text>
-        <Text>• Dedicated component page organization</Text>
-        <Text>• Text replacement options</Text>
-        
-        <VerticalSpace space="medium" />
-        
-        <Text>
-          <strong>Version:</strong> 1.0.0
-        </Text>
-        
-        <VerticalSpace space="small" />
-        
-        <Text>
-          <strong>Author:</strong> Shimmer Plugin Team
-        </Text>
+        <div style={{ marginBottom: '16px' }}>
+          <code style={{
+            display: 'inline-block',
+            fontFamily: "'SF Mono', 'Roboto Mono', monospace",
+            fontSize: '8px',
+            lineHeight: '1.5',
+            color: 'var(--figma-color-text, #000000)',
+            background: 'var(--figma-color-bg, #ffffff)',
+            padding: '2px 6px',
+            borderRadius: '6px',
+            border: '1px solid var(--figma-color-border, rgba(0, 0, 0, 0.1))',
+            whiteSpace: 'pre-wrap',
+            marginBottom: '4px'
+          }}>1.0</code>
+          <h3 style={{
+            fontSize: '11px',
+            fontWeight: '500',
+            marginBottom: '4px',
+            margin: '0 0 4px 0'
+          }}>Shimmer Effect Plugin</h3>
+          <p style={{
+            fontSize: '11px',
+            lineHeight: '16px',
+            marginBottom: '12px',
+            marginTop: '4px',
+            color: 'rgba(0, 0, 0, 0.8)'
+          }}>
+            Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
+          </p>
+        </div>
+
+        <div style={{ marginBottom: '16px' }}>
+          <div 
+            onClick={() => handleOpenModal('How it works', howItWorksContent)}
+            style={{
+              background: 'var(--figma-color-row-bg, #F5F5F5)',
+              borderRadius: '6px',
+              padding: '8px',
+              marginBottom: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: '400' }}>How it works</span>
+            <svg width="9" height="6" viewBox="0 0 9 6" fill="none" style={{ opacity: 0.3 }}>
+              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div 
+            onClick={() => handleOpenModal('Animation settings', animationSettingsContent)}
+            style={{
+              background: 'var(--figma-color-row-bg, #F5F5F5)',
+              borderRadius: '6px',
+              padding: '8px',
+              marginBottom: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: '400' }}>Animation settings</span>
+            <svg width="9" height="6" viewBox="0 0 9 6" fill="none" style={{ opacity: 0.3 }}>
+              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div 
+            onClick={() => handleOpenModal('Component organization', componentOrgContent)}
+            style={{
+              background: 'var(--figma-color-row-bg, #F5F5F5)',
+              borderRadius: '6px',
+              padding: '8px',
+              marginBottom: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              cursor: 'pointer'
+            }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: '400' }}>Component organization</span>
+            <svg width="9" height="6" viewBox="0 0 9 6" fill="none" style={{ opacity: 0.3 }}>
+              <path d="M1 1L4.5 4.5L8 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
       </div>
     )
   }
@@ -302,6 +435,15 @@ function Plugin() {
           </Button>
         </div>
       )}
+
+      <Modal 
+        onCloseButtonClick={handleCloseModal} 
+        open={modalOpen} 
+        position="bottom" 
+        title={modalContent?.title || ''}
+      >
+        {modalContent?.content}
+      </Modal>
     </div>
   )
 }

@@ -223,21 +223,6 @@ function Plugin() {
   function AboutContent() {
     return (
       <div style={{ padding: '12px' }}>
-        <div style={{ 
-          textAlign: 'center', 
-          marginBottom: '16px',
-          padding: '16px',
-          backgroundColor: 'var(--figma-color-bg-secondary, #f5f5f5)',
-          borderRadius: '8px',
-          border: '2px dashed var(--figma-color-border, #e5e5e5)'
-        }}>
-          <Text style={{ fontSize: '24px', marginBottom: '8px' }}>✨</Text>
-          <Text style={{ fontWeight: 'bold', marginBottom: '4px' }}>Shimmer Effect Demo</Text>
-          <Text style={{ fontSize: '11px', color: 'var(--figma-color-text-secondary, #666)' }}>
-            Select text → Apply shimmer → See animated loading effect
-          </Text>
-        </div>
-        
         <Text>
           Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
         </Text>

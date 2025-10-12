@@ -223,23 +223,45 @@ function Plugin() {
   function AboutContent() {
     return (
       <div style={{ padding: '12px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+          <img 
+            src="loadersample.gif" 
+            alt="Shimmer Effect Demo" 
+            style={{ 
+              maxWidth: '100%', 
+              height: 'auto',
+              borderRadius: '8px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+            }} 
+          />
+        </div>
+        
         <Text>
           Create beautiful loading/shimmer effects for text in Figma. This plugin automatically converts selected text into animated shimmer components with customizable settings.
         </Text>
+        
         <VerticalSpace space="medium" />
+        
         <Text>
           <strong>Features:</strong>
         </Text>
+        
         <VerticalSpace space="small" />
+        
         <Text>• Automatic font-weight optimization</Text>
         <Text>• Hollow text with gradient animation</Text>
         <Text>• Component set creation with prototyping</Text>
         <Text>• Dedicated component page organization</Text>
         <Text>• Text replacement options</Text>
+        
         <VerticalSpace space="medium" />
+        
         <Text>
           <strong>Version:</strong> 1.0.0
         </Text>
+        
+        <VerticalSpace space="small" />
+        
         <Text>
           <strong>Author:</strong> Shimmer Plugin Team
         </Text>

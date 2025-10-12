@@ -251,11 +251,11 @@ async function createShimmerEffect(textNode: TextNode, autoFontWeight: boolean, 
   componentSet.y = textNode.y + textNode.height + 20 // 20px gap below text
 
   // 10. Add interactive reactions using setReactionsAsync
-  // Start -> End: After timeout 600ms (0.6s), Smart animate 1200ms (1.2s) with ease out
+  // Start -> End: After timeout 1000ms (1s), Smart animate 1200ms (1.2s) with ease out
   await component1.setReactionsAsync([{
     trigger: {
       type: 'AFTER_TIMEOUT',
-      timeout: 0.6 // 600ms delay (in seconds)
+      timeout: 1.0 // 1000ms delay (in seconds)
     },
     actions: [{
       type: 'NODE',

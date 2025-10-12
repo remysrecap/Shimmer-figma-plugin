@@ -247,7 +247,7 @@ function Plugin() {
     const animationSettingsContent = (
       <div style={{ padding: '12px 12px 28px 12px', minHeight: '50vh' }}>
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0', color: 'rgba(0, 0, 0, 0.8)' }}>
-          The animation uses a 1.2s gradient sweep with ease-out easing, a 600ms initial delay, and instantly loops.
+          The shimmer animation creates a smooth, looping effect using smart animate. A white gradient sweeps across the text over 1.2 seconds with ease-out easing for natural deceleration. After a 1 second initial pause, the animation begins and seamlessly loops with an instant reset, creating a continuous shimmer effect perfect for loading states.
         </p>
       </div>
     )

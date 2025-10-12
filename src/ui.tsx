@@ -238,15 +238,15 @@ function Plugin() {
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
           Select text, click Create Shimmer, and the plugin automatically converts it into an animated component with hollow text, gradient overlay, and looping animation.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Vector Conversion</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Text is flattened to vectors with hollow styling</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Shimmer Effect</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>White gradient animates across the text</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Component Set</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>Two variants with smart animate prototyping</span>
         </div>
@@ -258,15 +258,15 @@ function Plugin() {
         <p style={{ fontSize: '11px', lineHeight: '16px', margin: '0 0 12px 0', color: 'rgba(0, 0, 0, 0.8)' }}>
           The animation uses a 1.2s gradient sweep with ease-out easing, a 600ms initial delay, and instantly loops.
         </p>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Duration</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>1200ms sweep with ease-out easing</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Timing</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>600ms delay before start, 1ms instant loop</span>
         </div>
-        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '8px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
+        <div style={{ fontSize: '11px', lineHeight: '16px', marginBottom: '12px', paddingLeft: '8px', borderLeft: '1px solid rgba(0, 0, 0, 0.1)' }}>
           <strong style={{ display: 'block', marginBottom: '2px' }}>Gradient</strong>
           <span style={{ color: 'rgba(0, 0, 0, 0.8)' }}>0% → 100% → 0% opacity white gradient</span>
         </div>
@@ -287,7 +287,7 @@ function Plugin() {
             borderRadius: '6px',
             border: '1px solid var(--figma-color-border, rgba(0, 0, 0, 0.1))',
             whiteSpace: 'pre-wrap',
-            marginBottom: '4px'
+            marginBottom: '8px'
           }}>1.0</code>
           <h3 style={{
             fontSize: '11px',

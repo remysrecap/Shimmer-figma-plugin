@@ -25,6 +25,9 @@ export default function () {
         return
       }
 
+      // Load all pages first (required for dynamic-page access)
+      await figma.loadAllPagesAsync()
+
       // Find or create "Shimmer component" page
       let shimmerPage = figma.root.children.find(page => page.name === 'Shimmer component')
       if (!shimmerPage) {
